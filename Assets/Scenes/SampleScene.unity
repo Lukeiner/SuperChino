@@ -461,6 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1154167791}
+  - component: {fileID: 1154167793}
   - component: {fileID: 1154167790}
   - component: {fileID: 1154167792}
   m_Layer: 0
@@ -557,6 +558,18 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+--- !u!114 &1154167793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154167789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1a85df269baca43beea5b5b86f4c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConectorRed
 --- !u!1 &1400388564
 GameObject:
   m_ObjectHideFlags: 0
