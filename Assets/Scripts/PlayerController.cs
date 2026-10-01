@@ -50,7 +50,19 @@ public class PlayerController : NetworkBehaviour
             currentState = PlayerState.Idle;
         }
     }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
 
+        
+        if (IsOwner)
+        {
+            if (CameraFollow.Instance != null)
+            {
+                CameraFollow.Instance.SetTarget(transform);
+            }
+        }
+    }
     private void MovePlayer()
     {
         rb.MovePosition(rb.position + moveInput * (moveSpeed * Time.fixedDeltaTime));

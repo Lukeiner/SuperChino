@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
 
-public class ObjectInteraction : MonoBehaviour
+public class ObjectInteraction : NetworkBehaviour
 {
     [Header("Configuración del Objeto")]
     [SerializeField] private string objectName = "Góndola de Fideos";
@@ -18,7 +19,13 @@ public class ObjectInteraction : MonoBehaviour
     [SerializeField] private string failDialog = "No sabés cómo hacer este trabajo."; // Diálogo si el rol NO coincide
 
     [Header("Tiempos según High Concept")]
-    [SerializeField] private float interactionTime = 4f; 
+    [SerializeField] private float interactionTime = 4f;
+
+    public NetworkVariable<bool> isCompleted = new NetworkVariable<bool>(
+    false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
 
     public string ObjectName => objectName;
     public float InteractionTime => interactionTime;
@@ -35,7 +42,30 @@ public class ObjectInteraction : MonoBehaviour
     }
     public string GetDialog(bool canInteract)
     {
+        if (isCompleted.Value) return "Esta tarea ya fue completada por otro jugador.";
         return canInteract ? successDialog : failDialog;
+    }
+
+    
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void RequestInteractRpc(ulong playerId)
+    {
+        
+        if (!IsServer || !IsSpawned) return;
+
+        if (isCompleted.Value) return;
+
+        isCompleted.Value = true;
+
+        NotifyInteractionRpc(objectName, playerId);
+    }
+
+
+    [Rpc(SendTo.Everyone)]
+    private void NotifyInteractionRpc(string taskName, ulong playerId)
+    {
+        Debug.Log($"<color=cyan>[RED]:</color> El jugador {playerId} completó la tarea en '{taskName}'.");
     }
     public void Interact(PlayerIdentity playerIdentity)
     {
