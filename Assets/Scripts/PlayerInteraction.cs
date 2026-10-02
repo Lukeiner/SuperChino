@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : NetworkBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private PlayerIdentity playerIdentity;
@@ -18,6 +19,8 @@ public class PlayerInteraction : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsOwner) return;
+
         if (currentInteractable != null && Input.GetKeyDown(interactKey))
         {
             TryInteractWithCurrentObject();
@@ -27,41 +30,48 @@ public class PlayerInteraction : MonoBehaviour
     private void TryInteractWithCurrentObject()
     {
         bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
-
-        // Obtenemos el diálogo configurado en el Inspector según la validación de rol
         string dialogMessage = currentInteractable.GetDialog(canInteract);
 
         if (canInteract)
         {
             playerController.SetState(PlayerController.PlayerState.Interacting);
 
-            // Imprime el diálogo de éxito en consola
-            Debug.Log($"<color=green>[DIÁLOGO DE {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            Debug.Log($"<color=green>[ÉXITO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
 
-            currentInteractable.Interact(playerIdentity);
+   
+            currentInteractable.RequestInteractRpc(OwnerClientId);
+
+            // Cortamos la referencia inmediatamente para evitar re-entradas/bucle
+            currentInteractable = null;
 
             playerController.SetState(PlayerController.PlayerState.Idle);
         }
         else
         {
-            Debug.Log($"<color=red>[DIÁLOGO DE {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            Debug.LogWarning($"<color=red>[RECHAZADO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsOwner) return;
+
         ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
-        if (interactable != null)
+        if (interactable != null && !interactable.isCompleted.Value)
         {
             currentInteractable = interactable;
+            Debug.Log($"<color=yellow>[PISTA]:</color> Presioná [{interactKey}] para interactuar con {interactable.ObjectName}.");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!IsOwner) return;
+
         ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
         if (interactable != null && interactable == currentInteractable)
         {
             currentInteractable = null;
+            Debug.Log("<color=grey>[PISTA]:</color> Te alejaste del objeto.");
         }
     }
 }
