@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56894215}
   - component: {fileID: 56894216}
+  - component: {fileID: 56894217}
   m_Layer: 0
   m_Name: Square (3)
   m_TagString: Untagged
@@ -211,6 +212,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!65 &56894217
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56894214}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 1.0000002, z: 0.2}
+  m_Center: {x: 9.313226e-10, y: 0.0000019073486, z: 0}
 --- !u!1001 &66658339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 107672514}
   - component: {fileID: 107672515}
+  - component: {fileID: 107672516}
   m_Layer: 0
   m_Name: Square (2)
   m_TagString: Untagged
@@ -431,6 +454,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!65 &107672516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107672513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0.000000004118192, y: 0, z: 0}
 --- !u!1 &161540668
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,12 +765,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.22058, y: 0.82784, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1448479159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
@@ -1183,6 +1227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1200113019}
   - component: {fileID: 1200113020}
+  - component: {fileID: 1200113021}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Untagged
@@ -1265,6 +1310,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!65 &1200113021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200113018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 1.0000002, z: 0.2}
+  m_Center: {x: 0.0000000012805685, y: 0, z: 0}
 --- !u!1 &1400388564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,6 +1374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1403768349}
   - component: {fileID: 1403768350}
+  - component: {fileID: 1403768351}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -1390,6 +1457,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!65 &1403768351
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403768348}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0.00000000615546, y: 0, z: 0}
 --- !u!1001 &1405034633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1704,6 +1792,11 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!4 &1448479159 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7270784861761797431, guid: 033bf47bc3780aa48b207098c1015e56, type: 3}
+  m_PrefabInstance: {fileID: 3391288247471887536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1487646810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2247,7 +2340,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7270784861761797431, guid: 033bf47bc3780aa48b207098c1015e56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 519420032}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8408534078947587613, guid: 033bf47bc3780aa48b207098c1015e56, type: 3}
       insertIndex: 1
@@ -2263,7 +2359,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1154167791}
   - {fileID: 3391288247471887536}
