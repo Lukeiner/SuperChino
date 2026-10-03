@@ -6,6 +6,7 @@ public class ControladorDeSpawn : MonoBehaviour
 {
     public GameObject objeto;
     public GameObject[] puntosSpawn;
+    public Sprite[] sprites;
 
     private bool[] puntosOcupados;
 
@@ -16,11 +17,11 @@ public class ControladorDeSpawn : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            SpawnearObjeto();
+            SpawnearObjeto(i);
         }
     }
 
-    void SpawnearObjeto()
+    void SpawnearObjeto(int i)
     {
         int numeroAleatorio;
 
@@ -33,11 +34,16 @@ public class ControladorDeSpawn : MonoBehaviour
 
         puntosOcupados[numeroAleatorio] = true;
 
-        Instantiate(
+        GameObject nuevoObjeto = Instantiate(
             objeto,
             puntosSpawn[numeroAleatorio].transform.position,
             puntosSpawn[numeroAleatorio].transform.rotation
             );
+
+        SpriteRenderer spriteRenderer = nuevoObjeto.GetComponent<SpriteRenderer>();
+
+        spriteRenderer.sprite = sprites[i];
+
 
     }
 
