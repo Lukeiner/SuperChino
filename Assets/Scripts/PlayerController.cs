@@ -29,12 +29,6 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (currentState == PlayerState.Interacting || currentState == PlayerState.Frozen)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
-
         ReadInput();
     }
 
