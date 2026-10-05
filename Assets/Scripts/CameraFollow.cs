@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -31,7 +32,11 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (targetTransform == null) return;
+        if (targetTransform == null)
+        {
+            FindLocalPlayer();
+            return;
+        }
 
         // Posición deseada con el offset
         Vector3 desiredPosition = targetTransform.position + offset;
@@ -40,5 +45,18 @@ public class CameraFollow : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
         transform.position = smoothedPosition;
+    }
+
+    private void FindLocalPlayer()
+    {
+        // Si el NetworkManager ya está activo, buscamos el objeto local del jugador
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.LocalClient != null)
+        {
+            var localPlayerObject = NetworkManager.Singleton.LocalClient.PlayerObject;
+            if (localPlayerObject != null)
+            {
+                targetTransform = localPlayerObject.transform;
+            }
+        }
     }
 }

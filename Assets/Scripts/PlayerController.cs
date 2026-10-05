@@ -12,15 +12,22 @@ public class PlayerController : NetworkBehaviour
     public enum PlayerState { Idle, Moving, Interacting, Frozen}
 
     private Vector2 moveInput;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            if (CameraFollow.Instance != null)
+            {
+                CameraFollow.Instance.SetTarget(transform);
+            }
+        }
+    }
     private void Update()
     {
         if (!IsOwner) return;
-
-        if (currentState == PlayerState.Interacting || currentState == PlayerState.Frozen)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
 
         ReadInput();
     }
@@ -50,19 +57,7 @@ public class PlayerController : NetworkBehaviour
             currentState = PlayerState.Idle;
         }
     }
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-
-        
-        if (IsOwner)
-        {
-            if (CameraFollow.Instance != null)
-            {
-                CameraFollow.Instance.SetTarget(transform);
-            }
-        }
-    }
+    
     private void MovePlayer()
     {
         rb.MovePosition(rb.position + moveInput * (moveSpeed * Time.fixedDeltaTime));
