@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager_2 : MonoBehaviour
 {
     [Header("UI Host")]
     [SerializeField] private Button createHostButton;
