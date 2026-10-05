@@ -3,7 +3,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private MainMenuUI mainMenuUI;
+    //[SerializeField] private MainMenuUI mainMenuUI;
     [SerializeField] private PauseMenuUI pauseMenuUI;
 
     private bool isGamePaused = false;
@@ -11,11 +11,11 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (mainMenuUI != null)
-        {
-            mainMenuUI.OnPlayClicked += HandlePlayClicked;
-            mainMenuUI.OnQuitClicked += HandleQuitClicked;
-        }
+        //if (mainMenuUI != null)
+        //{
+        //mainMenuUI.OnPlayClicked += HandlePlayClicked;
+        //mainMenuUI.OnQuitClicked += HandleQuitClicked;
+        //}
 
         if (pauseMenuUI != null)
         {
@@ -26,11 +26,11 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (mainMenuUI != null)
-        {
-            mainMenuUI.OnPlayClicked -= HandlePlayClicked;
-            mainMenuUI.OnQuitClicked -= HandleQuitClicked;
-        }
+        //if (mainMenuUI != null)
+        //{
+        //mainMenuUI.OnPlayClicked -= HandlePlayClicked;
+        // mainMenuUI.OnQuitClicked -= HandleQuitClicked;
+        //}
 
         if (pauseMenuUI != null)
         {
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        ReturnToMainMenu();
+        //ReturnToMainMenu();
     }
 
     private void Update()
@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     private void HandlePlayClicked()
     {
-        mainMenuUI.HideAll();
+        // mainMenuUI.HideAll();
 
         isInGameState = true;
         isGamePaused = false;
@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
         isGamePaused = false;
 
         pauseMenuUI.HideAll();
-        mainMenuUI.ShowMainMenu();
+        //mainMenuUI.ShowMainMenu();
     }
 
     private void HandleQuitClicked()
