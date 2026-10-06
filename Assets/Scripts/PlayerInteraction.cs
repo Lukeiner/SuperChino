@@ -31,23 +31,32 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (currentInteractable == null || currentInteractable.isCompleted.Value) return;
 
-        bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
-        string dialogMessage = currentInteractable.GetDialog(canInteract);
+        // Guardamos la referencia local por seguridad
+        ObjectInteraction targetObject = currentInteractable;
+
+        bool canInteract = targetObject.CanPlayerInteract(playerIdentity);
+        string dialogMessage = targetObject.GetDialog(canInteract);
 
         playerController.SetState(PlayerController.PlayerState.Interacting);
 
-
         if (canInteract)
         {
-            Debug.Log($"<color=green>[ÉXITO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-            currentInteractable.RequestInteractRpc(OwnerClientId, true);
+            Debug.Log($"<color=green>[ÉXITO - {targetObject.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+
+            // Limpiamos la referencia del disparador para no re-evaluarlo localmente
             currentInteractable = null;
+
+            // Enviamos la solicitud autoritativa al Servidor
+            targetObject.RequestInteractRpc(OwnerClientId);
         }
         else
         {
-            Debug.LogWarning($"<color=red>[RECHAZADO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-            currentInteractable.RequestInteractRpc(OwnerClientId, false);
+            Debug.LogWarning($"<color=red>[RECHAZADO - {targetObject.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+
+            // Si falló por rol, le notificamos al servidor para que pinte en rojo
+            targetObject.RequestInteractRpc(OwnerClientId);
         }
+
         playerController.SetState(PlayerController.PlayerState.Idle);
     }
     private void OnTriggerEnter2D(Collider2D collision)

@@ -1530,11 +1530,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectInteraction
   ShowTopMostFoldoutHeaderGroup: 1
-  objectName: "G\xF3ndola de Fideos"
+  objectName: Charco de agua
   reqIsLadron: 0
   requiredRole: 0
-  successDialog: "\xA1Reposiste la g\xF3ndola con \xE9xito!"
-  failDialog: "No sab\xE9s c\xF3mo hacer este trabajo."
+  successDialog: "\xA1Limpiaste el charquito!"
+  failDialog: Te tropezaste.
   interactionTime: 4
   objectSpriteRenderer: {fileID: 970226211}
   successColor: {r: 0, g: 1, b: 0, a: 1}
@@ -2891,11 +2891,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectInteraction
   ShowTopMostFoldoutHeaderGroup: 1
-  objectName: "G\xF3ndola de Fideos"
+  objectName: Karen enojada
   reqIsLadron: 0
   requiredRole: 2
-  successDialog: "\xA1Reposiste la g\xF3ndola con \xE9xito!"
-  failDialog: "No sab\xE9s c\xF3mo hacer este trabajo."
+  successDialog: Calmaste a Karen
+  failDialog: "Karen se enoj\xF3"
   interactionTime: 4
   objectSpriteRenderer: {fileID: 2046077233}
   successColor: {r: 0, g: 1, b: 0, a: 1}

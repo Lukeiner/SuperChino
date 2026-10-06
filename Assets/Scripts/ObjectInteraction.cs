@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 
@@ -69,7 +70,6 @@ public class ObjectInteraction : NetworkBehaviour
         }
     }
 
-
     public bool CanPlayerInteract(PlayerIdentity playerIdentity)
     {
         if (playerIdentity == null || isCompleted.Value) return false;
@@ -86,43 +86,54 @@ public class ObjectInteraction : NetworkBehaviour
         return canInteract ? successDialog : failDialog;
     }
 
-    
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void RequestInteractRpc(ulong playerId, bool canInteract)
+    public void RequestInteractRpc(ulong clientId)
     {
-
         if (!NetworkObject.IsSpawned || !NetworkManager.IsServer) return;
 
-        if (canInteract)
+        // Si ya está completada, ignoramos cualquier otra interacción
+        if (isCompleted.Value) return;
+
+        // Obtenemos el PlayerObject del cliente que envió la petición
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
         {
-            // Al cambiar la NetworkVariable, OnCompletedStateChanged pintará de verde a TODOS automáticamente
-            isCompleted.Value = true;
-        }
-        else
-        {
-            // Notificamos a todos en red para mostrar el destello ROJO si falló
-            SetFailColorRpc();
+            var playerIdentity = client.PlayerObject.GetComponent<PlayerIdentity>();
+
+            // VALIDACIÓN AUTORITATIVA EN EL SERVIDOR
+            bool hasValidRole = CanPlayerInteract(playerIdentity);
+
+            if (hasValidRole)
+            {
+                // Solo si el servidor confirma que coincide el rol, se completa
+                isCompleted.Value = true;
+                SetColorRpc(successColor);
+            }
+            else
+            {
+                // Si no coincide el rol en el servidor, tiñe de rojo la estación
+                SetColorRpc(failColor);
+            }
         }
 
-        NotifyInteractionRpc(objectName, playerId);
+        //NotifyInteractionRpc(objectName, playerId);
     }
 
-
     [Rpc(SendTo.Everyone)]
+
+    public void SetColorRpc(Color targetColor)
+    {
+        if (objectSpriteRenderer != null)
+        {
+            objectSpriteRenderer.color = targetColor;
+        }
+    }
     private void NotifyInteractionRpc(string taskName, ulong playerId)
     {
         Debug.Log($"<color=cyan>[RED]:</color> El jugador {playerId} completó la tarea en '{taskName}'.");
     }
 
-    [Rpc(SendTo.Everyone)]
-    public void SetFailColorRpc()
-    {
-        if (objectSpriteRenderer != null)
-        {
-            objectSpriteRenderer.color = failColor;
-        }
-    }
+
     public void Interact(PlayerIdentity playerIdentity)
     {
         if (reqIsLadron && playerIdentity.IsLadron())
