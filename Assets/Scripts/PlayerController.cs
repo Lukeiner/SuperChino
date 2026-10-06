@@ -18,18 +18,12 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
-        if (IsOwner)
+        if (!IsOwner)
         {
-            if (CameraFollow.Instance != null)
-            {
-                CameraFollow.Instance.SetTarget(transform);
-            }
-
-            if (playerAudioListener != null)
-            {
-                playerAudioListener.enabled = IsOwner;
-            }
+            if (playerAudioListener != null) playerAudioListener.enabled = false;
+         
         }
+
     }
     private void Update()
     {

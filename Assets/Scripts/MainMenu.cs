@@ -56,6 +56,7 @@ public class MainMenu : MonoBehaviour
             if (codeDisplayText != null)
             {
                 codeDisplayText.text = $"CÓDIGO DE SALA:\n<color=yellow>{joinCode}</color>";
+                await Task.Delay(10000);
                 NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class UIManager_2 : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class UIManager_2 : MonoBehaviour
             {
                 codeDisplayText.text = $"CÓDIGO DE SALA:\n<color=yellow>{code}</color>";
             }
+
+            await Task.Delay(10000);
 
             // Ocultar menú de conexión si lo desean
             if (lobbyPanel != null) lobbyPanel.SetActive(false);
