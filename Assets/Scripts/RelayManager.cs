@@ -19,7 +19,7 @@ public class RelayManager : MonoBehaviour
 
     private async void Start()
     {
-        // 1. Inicializar los servicios de Unity y autenticar de forma anónima
+       
         await UnityServices.InitializeAsync();
 
         if (!AuthenticationService.Instance.IsSignedIn)
@@ -61,17 +61,17 @@ public class RelayManager : MonoBehaviour
         }
     }
 
-    // Método que llamará el botón "Unirse / Client" pasando el código ingresado en el InputField
+
     public async Task<bool> JoinRelay(string joinCode)
     {
         try
         {
             Debug.Log($"[RELAY]: Intentando unirse a la sala con código: {joinCode}");
 
-            // Validar e ingresar a la asignación con el código
+            
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            // Configurar el Unity Transport para usar los datos de la sala cliente
+           
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
                 joinAllocation.RelayServer.IpV4,
                 (ushort)joinAllocation.RelayServer.Port,

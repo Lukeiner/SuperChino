@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour
 
     public async void OnJoinClientClicked()
     {
-        // 1. Validar que la referencia no esté nula y que se haya escrito algo
+        
         if (joinCodeInput == null)
         {
             Debug.LogError("[UI]: Falta asignar el Join Code InputField en el Inspector de Unity.");
@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour
 
         string codeToJoin = joinCodeInput.text.Trim();
 
-        // 2. Intentar unirse mediante el RelayManager
+        
         bool success = await RelayManager.Instance.JoinRelay(codeToJoin);
 
         if (success)
