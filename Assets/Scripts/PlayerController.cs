@@ -5,6 +5,7 @@ public class PlayerController : NetworkBehaviour
     [Header("Configuración de Movimiento")]
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AudioListener playerAudioListener;
 
     [Header("Estado del jugador")]
     public PlayerState currentState = PlayerState.Idle;
@@ -12,15 +13,21 @@ public class PlayerController : NetworkBehaviour
     public enum PlayerState { Idle, Moving, Interacting, Frozen}
 
     private Vector2 moveInput;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (!IsOwner)
+        {
+            if (playerAudioListener != null) playerAudioListener.enabled = false;
+         
+        }
+
+    }
     private void Update()
     {
         if (!IsOwner) return;
-
-        if (currentState == PlayerState.Interacting || currentState == PlayerState.Frozen)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
 
         ReadInput();
     }
@@ -50,7 +57,7 @@ public class PlayerController : NetworkBehaviour
             currentState = PlayerState.Idle;
         }
     }
-
+    
     private void MovePlayer()
     {
         rb.MovePosition(rb.position + moveInput * (moveSpeed * Time.fixedDeltaTime));
@@ -61,5 +68,7 @@ public class PlayerController : NetworkBehaviour
         if (currentState == newState) return;
         currentState = newState;
     }
+
+
 
 }

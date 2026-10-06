@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : NetworkBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private PlayerIdentity playerIdentity;
@@ -18,6 +19,8 @@ public class PlayerInteraction : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsOwner) return;
+
         if (currentInteractable != null && Input.GetKeyDown(interactKey))
         {
             TryInteractWithCurrentObject();
@@ -26,42 +29,48 @@ public class PlayerInteraction : MonoBehaviour
 
     private void TryInteractWithCurrentObject()
     {
-        bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
+        if (currentInteractable == null || currentInteractable.isCompleted.Value) return;
 
-        // Obtenemos el diálogo configurado en el Inspector según la validación de rol
+        bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
         string dialogMessage = currentInteractable.GetDialog(canInteract);
+
+        playerController.SetState(PlayerController.PlayerState.Interacting);
+
 
         if (canInteract)
         {
-            playerController.SetState(PlayerController.PlayerState.Interacting);
-
-            // Imprime el diálogo de éxito en consola
-            Debug.Log($"<color=green>[DIÁLOGO DE {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-
-            currentInteractable.Interact(playerIdentity);
-
-            playerController.SetState(PlayerController.PlayerState.Idle);
+            Debug.Log($"<color=green>[ÉXITO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            currentInteractable.RequestInteractRpc(OwnerClientId, true);
+            currentInteractable = null;
         }
         else
         {
-            Debug.Log($"<color=red>[DIÁLOGO DE {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            Debug.LogWarning($"<color=red>[RECHAZADO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            currentInteractable.RequestInteractRpc(OwnerClientId, false);
         }
+        playerController.SetState(PlayerController.PlayerState.Idle);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsOwner) return;
+
         ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
-        if (interactable != null)
+        if (interactable != null && !interactable.isCompleted.Value)
         {
             currentInteractable = interactable;
+            Debug.Log($"<color=yellow>[PISTA]:</color> Presioná [{interactKey}] para interactuar con {interactable.ObjectName}.");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!IsOwner) return;
+
         ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
         if (interactable != null && interactable == currentInteractable)
         {
             currentInteractable = null;
+            Debug.Log("<color=grey>[PISTA]:</color> Te alejaste del objeto.");
         }
     }
 }
