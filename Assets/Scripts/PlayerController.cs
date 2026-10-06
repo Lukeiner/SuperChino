@@ -5,6 +5,7 @@ public class PlayerController : NetworkBehaviour
     [Header("Configuración de Movimiento")]
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AudioListener playerAudioListener;
 
     [Header("Estado del jugador")]
     public PlayerState currentState = PlayerState.Idle;
@@ -22,6 +23,11 @@ public class PlayerController : NetworkBehaviour
             if (CameraFollow.Instance != null)
             {
                 CameraFollow.Instance.SetTarget(transform);
+            }
+
+            if (playerAudioListener != null)
+            {
+                playerAudioListener.enabled = IsOwner;
             }
         }
     }
@@ -68,5 +74,7 @@ public class PlayerController : NetworkBehaviour
         if (currentState == newState) return;
         currentState = newState;
     }
+
+
 
 }

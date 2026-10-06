@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7373944002261074373}
   - component: {fileID: 2692818219300011595}
   - component: {fileID: -7714408489061706887}
+  - component: {fileID: 4461668732401009240}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -142,6 +143,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 6
   rb: {fileID: 7373944002261074373}
+  playerAudioListener: {fileID: 4461668732401009240}
   currentState: 0
 --- !u!114 &822891178230553988
 MonoBehaviour:
@@ -309,3 +311,11 @@ MonoBehaviour:
   UseRigidBodyForMotion: 1
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!81 &4461668732401009240
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408534078947587613}
+  m_Enabled: 1
