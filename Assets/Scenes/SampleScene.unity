@@ -1487,6 +1487,9 @@ MonoBehaviour:
   successDialog: "\xA1Reposiste la g\xF3ndola con \xE9xito!"
   failDialog: "No sab\xE9s c\xF3mo hacer este trabajo."
   interactionTime: 4
+  objectSpriteRenderer: {fileID: 1227583464}
+  successColor: {r: 0, g: 1, b: 0, a: 1}
+  failColor: {r: 1, g: 0, b: 0, a: 1}
   isCompleted:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0

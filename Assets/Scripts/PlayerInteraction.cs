@@ -29,27 +29,26 @@ public class PlayerInteraction : NetworkBehaviour
 
     private void TryInteractWithCurrentObject()
     {
+        if (currentInteractable == null || currentInteractable.isCompleted.Value) return;
+
         bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
         string dialogMessage = currentInteractable.GetDialog(canInteract);
 
+        playerController.SetState(PlayerController.PlayerState.Interacting);
+
+
         if (canInteract)
         {
-            playerController.SetState(PlayerController.PlayerState.Interacting);
-
             Debug.Log($"<color=green>[ÉXITO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-
-   
-            currentInteractable.RequestInteractRpc(OwnerClientId);
-
-            // Cortamos la referencia inmediatamente para evitar re-entradas/bucle
+            currentInteractable.RequestInteractRpc(OwnerClientId, true);
             currentInteractable = null;
-
-            playerController.SetState(PlayerController.PlayerState.Idle);
         }
         else
         {
             Debug.LogWarning($"<color=red>[RECHAZADO - {currentInteractable.ObjectName.ToUpper()}]:</color> {dialogMessage}");
+            currentInteractable.RequestInteractRpc(OwnerClientId, false);
         }
+        playerController.SetState(PlayerController.PlayerState.Idle);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
