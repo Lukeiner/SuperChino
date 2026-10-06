@@ -29,19 +29,18 @@ public class RelayManager : MonoBehaviour
         }
     }
 
-    // Método que llamará el botón "Crear Sala / Host" de la UI
     public async Task<string> CreateRelay(int maxPlayers = 4)
     {
         try
         {
-            // Solicitar una asignación a Unity Relay para N jugadores
+            
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxPlayers);
 
-            // Obtener el Join Code generado por Unity
+            
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             Debug.Log($"[RELAY]: Sala creada con éxito. Join Code: {joinCode}");
 
-            // Configurar el Unity Transport para usar Relay
+            
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
                 allocation.RelayServer.IpV4,
                 (ushort)allocation.RelayServer.Port,
@@ -50,10 +49,10 @@ public class RelayManager : MonoBehaviour
                 allocation.ConnectionData
             );
 
-            // Iniciar el Host en Netcode
+            
             NetworkManager.Singleton.StartHost();
 
-            return joinCode; // Se le devuelve el código a la UI para que lo muestre en pantalla
+            return joinCode;
         }
         catch (RelayServiceException e)
         {

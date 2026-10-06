@@ -13,7 +13,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton sencillo para que el player local pueda registrarse fácilmente
+        
         if (Instance == null)
         {
             Instance = this;
