@@ -12,7 +12,7 @@ public class ConectorRed : MonoBehaviour
 
     void Update()
     {
-        //Presionar H para ser Host
+   
         if (Input.GetKeyDown(KeyCode.H))
         {
             IniciarComoHost();
