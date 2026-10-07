@@ -1,0 +1,28 @@
+:root {
+}
+
+.buttonstyle {
+    position: relative;
+    top: 74px;
+    left: auto;
+    height: 110px;
+    width: 665px;
+    font-size: 110px;
+    align-items: stretch;
+    align-self: center;
+    -unity-font-style: bold;
+    background-color: rgb(71, 132, 132);
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
+    margin-bottom: 50px;
+    transition-duration: 0.2s;
+}
+
+
+
+.buttonstyle:hover {
+    scale: 1.1 1.1;
+    background-color: rgb(52, 91, 91);
+}
