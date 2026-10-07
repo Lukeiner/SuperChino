@@ -731,6 +731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335791119}
+  - component: {fileID: 335791121}
   - component: {fileID: 335791120}
   m_Layer: 0
   m_Name: ControladorDeSpawn
@@ -766,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fa7b338b725924099adcca9474dab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorDeSpawn
+  ShowTopMostFoldoutHeaderGroup: 1
   objeto: {fileID: 6186105511948810956, guid: b4b72263fe9e5144cb1015e84413ad76, type: 3}
   puntosSpawn:
   - {fileID: 2065752508}
@@ -781,6 +783,33 @@ MonoBehaviour:
   - {fileID: -9020500775623614678, guid: d72b973c3397a1b4eae13ba7c4d81b1c, type: 3}
   - {fileID: -5075373584232630967, guid: 9eb7f380e085ae243ae75d2f5c56bdb1, type: 3}
   - {fileID: 2743607547569096794, guid: d14da2860e2b1b449ad3edda50d739f4, type: 3}
+--- !u!114 &335791121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335791118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3790944054
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &409098680
 GameObject:
   m_ObjectHideFlags: 0
