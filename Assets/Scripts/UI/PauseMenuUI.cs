@@ -1,12 +1,13 @@
-using System;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(UIDocument))]
 public class PauseMenuUI : MonoBehaviour
 {
-    public event Action OnResumeClicked;
-    public event Action OnQuitToMenuClicked;
-    public event Action<float> OnVolumeChanged;
+    private const string IdCodeScene = "IDCode";
+    private const string VolumeKey = "GameVolume";
 
     private VisualElement pauseContainer;
     private VisualElement optionsContainer;
@@ -15,36 +16,37 @@ public class PauseMenuUI : MonoBehaviour
     private Button optionsButton;
     private Button quitButton;
     private Button backButton;
+
     private Slider volumeSlider;
 
     private void OnEnable()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        pauseContainer = root.Q<VisualElement>("PauseContainer");
-        optionsContainer = root.Q<VisualElement>("PauseOptionsContainer");
+        pauseContainer = Find<VisualElement>(root, "PauseContainer");
+        optionsContainer = Find<VisualElement>(root, "PauseOptionsContainer");
 
-        resumeButton = root.Q<Button>("resumeButton");
-        optionsButton = root.Q<Button>("optionsButton");
-        quitButton = root.Q<Button>("quitButton");
-        backButton = root.Q<Button>("backButton");
-        volumeSlider = root.Q<Slider>("volumeSlider");
+        resumeButton = Find<Button>(root, "resumeButton");
+        optionsButton = Find<Button>(root, "optionsButton");
+        quitButton = Find<Button>(root, "quitButton");
+        backButton = Find<Button>(root, "backButton");
 
-        if (resumeButton != null) resumeButton.clicked += Resume;
-        if (optionsButton != null) optionsButton.clicked += OpenOptions;
-        if (quitButton != null) quitButton.clicked += QuitToMenu;
-        if (backButton != null) backButton.clicked += CloseOptions;
+        volumeSlider = Find<Slider>(root, "volumeSlider");
+
+        Hook(resumeButton, HideAll);
+        Hook(optionsButton, OpenOptions);
+        Hook(quitButton, LeaveMatch);
+        Hook(backButton, ShowPauseMenu);
 
         if (volumeSlider != null)
         {
-            float savedVolume = PlayerPrefs.GetFloat("GameVolume", 1f);
-            volumeSlider.value = savedVolume;
+            volumeSlider.lowValue = 0f;
+            volumeSlider.highValue = 1f;
 
-            volumeSlider.RegisterValueChangedCallback(evt =>
-            {
-                PlayerPrefs.SetFloat("GameVolume", evt.newValue);
-                OnVolumeChanged?.Invoke(evt.newValue);
-            });
+            float saved = PlayerPrefs.GetFloat(VolumeKey, 1f);
+            volumeSlider.SetValueWithoutNotify(saved);
+
+            volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
         }
 
         HideAll();
@@ -52,42 +54,71 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        if (resumeButton != null) resumeButton.clicked -= Resume;
-        if (optionsButton != null) optionsButton.clicked -= OpenOptions;
-        if (quitButton != null) quitButton.clicked -= QuitToMenu;
-        if (backButton != null) backButton.clicked -= CloseOptions;
+        Unhook(resumeButton, HideAll);
+        Unhook(optionsButton, OpenOptions);
+        Unhook(quitButton, LeaveMatch);
+        Unhook(backButton, ShowPauseMenu);
+
+        if (volumeSlider != null)
+            volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
+
+        PlayerPrefs.Save();
     }
 
-    private void Resume()
+    private void Update()
     {
-        OnResumeClicked?.Invoke();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ShowPauseMenu();
     }
 
-    private void QuitToMenu()
+
+    private void LeaveMatch()
     {
-        OnQuitToMenuClicked?.Invoke();
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+            NetworkManager.Singleton.Shutdown();
+
+        SceneManager.LoadScene(IdCodeScene);
     }
 
-    private void OpenOptions()
+    private void OnVolumeChanged(ChangeEvent<float> evt)
     {
-        if (pauseContainer != null) pauseContainer.style.display = DisplayStyle.None;
-        if (optionsContainer != null) optionsContainer.style.display = DisplayStyle.Flex;
+        PlayerPrefs.SetFloat(VolumeKey, evt.newValue);
+        AudioListener.volume = evt.newValue;
     }
 
-    private void CloseOptions()
+
+    private void OpenOptions() => ShowPanel(optionsContainer);
+
+    public void ShowPauseMenu() => ShowPanel(pauseContainer);
+    public void HideAll() => ShowPanel(null);
+
+    private void ShowPanel(VisualElement panelToShow)
     {
-        ShowPauseMenu();
+        SetVisible(pauseContainer, panelToShow == pauseContainer);
+        SetVisible(optionsContainer, panelToShow == optionsContainer);
     }
 
-    public void ShowPauseMenu()
+    private static void SetVisible(VisualElement element, bool visible)
     {
-        if (pauseContainer != null) pauseContainer.style.display = DisplayStyle.Flex;
-        if (optionsContainer != null) optionsContainer.style.display = DisplayStyle.None;
+        if (element != null)
+            element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
-    public void HideAll()
+    private T Find<T>(VisualElement root, string elementName) where T : VisualElement
     {
-        if (pauseContainer != null) pauseContainer.style.display = DisplayStyle.None;
-        if (optionsContainer != null) optionsContainer.style.display = DisplayStyle.None;
+        T element = root.Q<T>(elementName);
+        if (element == null)
+            Debug.LogError($"[PauseMenuUI] No se encontró '{elementName}' en el UXML. Revisa el nombre.", this);
+        return element;
+    }
+
+    private static void Hook(Button button, System.Action action)
+    {
+        if (button != null) button.clicked += action;
+    }
+
+    private static void Unhook(Button button, System.Action action)
+    {
+        if (button != null) button.clicked -= action;
     }
 }

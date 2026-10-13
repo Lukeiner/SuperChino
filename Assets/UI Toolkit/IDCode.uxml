@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=5f71195ba9db7094e970857de47981b1&amp;type=3#ButtonStyle"/>
+    <Style src="project://database/Assets/UI%20Toolkit/IDCode.uss?fileID=7433441132597879392&amp;guid=55749c3005fa3c941a495cdab6b09a75&amp;type=3#IDCode"/>
+    <ui:VisualElement name="IDCodeRoot" class="screen">
+        <ui:Label text="ID CODE" class="title"/>
+        <ui:VisualElement class="columns">
+            <ui:VisualElement name="HostPanel" class="panel">
+                <ui:Label text="Crear sala" class="panel-title"/>
+                <ui:Label name="codeLabel" text="" class="code-label"/>
+                <ui:Button name="hostButton" text="Crear partida" class="buttonstyle idcode-button"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="JoinPanel" class="panel">
+                <ui:Label text="Unirse a una sala" class="panel-title"/>
+                <ui:TextField name="joinCodeField" max-length="6" class="join-field"/>
+                <ui:Button name="joinButton" text="Unirse" class="buttonstyle idcode-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label name="statusLabel" text="" class="status-label"/>
+        <ui:Button name="backButton" text="Volver" class="buttonstyle idcode-button"/>
+    </ui:VisualElement>
+</ui:UXML>

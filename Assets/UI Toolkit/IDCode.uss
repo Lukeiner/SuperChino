@@ -1,0 +1,79 @@
+.screen {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(191, 148, 80);
+    padding: 20px 60px;
+}
+
+.title {
+    font-size: 120px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    margin-bottom: 30px;
+}
+
+.columns {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.panel {
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: center;
+    margin: 0 40px;
+}
+
+.panel-title {
+    font-size: 48px;
+    color: rgb(20, 40, 40);
+    margin-bottom: 10px;
+}
+
+.code-label {
+    font-size: 100px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(30, 50, 90);
+    min-height: 130px;
+    margin-bottom: 20px;
+}
+
+.join-field {
+    width: 90%;
+    max-width: 640px;
+    margin: 0 0 20px 0;
+}
+
+.join-field .unity-base-text-field__input {
+    font-size: 64px;
+    height: 130px;
+    -unity-text-align: middle-center;
+    border-radius: 20px;
+}
+
+.status-label {
+    font-size: 48px;
+    color: rgb(20, 40, 40);
+    min-height: 60px;
+    margin: 10px 0;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.idcode-button {
+    top: 0;
+    width: 90%;
+    max-width: 640px;
+    height: 140px;
+    font-size: 64px;
+    color: rgb(20, 40, 40);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.idcode-button:active {
+    background-color: rgb(52, 91, 91);
+}

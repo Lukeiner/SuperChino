@@ -3,16 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-/// <summary>
-/// Menú de inicio (UI Toolkit).
-/// Un solo script: busca los elementos del UXML, reacciona a los botones
-/// y ejecuta la acción (cambiar de escena, salir, volumen).
-/// Va en el mismo GameObject que el UIDocument.
-/// </summary>
 [RequireComponent(typeof(UIDocument))]
 public class MainMenuUI : MonoBehaviour
 {
-    // La escena debe estar en Build Profiles con este nombre exacto.
     private const string IdCodeScene = "IDCode";
     private const string VolumeKey = "GameVolume";
 
@@ -33,7 +26,6 @@ public class MainMenuUI : MonoBehaviour
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        // Los nombres deben coincidir con el campo "name" de cada elemento en el UXML.
         mainContainer = Find<VisualElement>(root, "MenuContainer");
         optionsContainer = Find<VisualElement>(root, "OptionsContainer");
         creditsContainer = Find<VisualElement>(root, "CreditsContainer");
@@ -56,7 +48,6 @@ public class MainMenuUI : MonoBehaviour
 
         if (volumeSlider != null)
         {
-            // AudioListener.volume va de 0 a 1, así que fijamos el rango del slider igual.
             volumeSlider.lowValue = 0f;
             volumeSlider.highValue = 1f;
 
@@ -85,18 +76,15 @@ public class MainMenuUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // ---------- Acciones ----------
 
     private void PlayGame()
     {
-        // Todavía no hay sesión de red, así que se usa el SceneManager normal.
         SceneManager.LoadScene(IdCodeScene);
     }
 
     private void QuitGame()
     {
 #if UNITY_EDITOR
-        // Application.Quit() no hace nada dentro del editor.
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
@@ -109,7 +97,6 @@ public class MainMenuUI : MonoBehaviour
         AudioListener.volume = evt.newValue;
     }
 
-    // ---------- Paneles ----------
 
     private void OpenOptions() => ShowPanel(optionsContainer);
     private void OpenCredits() => ShowPanel(creditsContainer);
@@ -130,9 +117,7 @@ public class MainMenuUI : MonoBehaviour
             element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
-    // ---------- Utilidades ----------
 
-    // Si un nombre no coincide con el UXML, avisa en la Console en lugar de fallar en silencio.
     private T Find<T>(VisualElement root, string elementName) where T : VisualElement
     {
         T element = root.Q<T>(elementName);
