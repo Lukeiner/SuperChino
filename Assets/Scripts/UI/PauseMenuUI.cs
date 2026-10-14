@@ -67,10 +67,21 @@ public class PauseMenuUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+
+        if (IsOptionsOpen)
+            ShowPauseMenu();
+        else if (IsPauseOpen)
+            HideAll();
+        else
             ShowPauseMenu();
     }
 
+    private bool IsPauseOpen => IsShown(pauseContainer);
+    private bool IsOptionsOpen => IsShown(optionsContainer);
+
+    private static bool IsShown(VisualElement element)
+        => element != null && element.style.display == DisplayStyle.Flex;
 
     private void LeaveMatch()
     {
@@ -85,7 +96,6 @@ public class PauseMenuUI : MonoBehaviour
         PlayerPrefs.SetFloat(VolumeKey, evt.newValue);
         AudioListener.volume = evt.newValue;
     }
-
 
     private void OpenOptions() => ShowPanel(optionsContainer);
 

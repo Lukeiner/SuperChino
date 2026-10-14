@@ -41,11 +41,12 @@ public class PlayerController : NetworkBehaviour
 
     private void ReadInput()
     {
-        
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        //Reemplacé las dos lineas de moveX y moveY en una sola y abajo está el touch para el tactil
+        Vector2 keyboard = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector2 touch = HUDUI.MoveInput;
 
-        moveInput = new Vector2(moveX, moveY).normalized;
+        // Si se usas el joystick, manda él (la velocidad depende de cuánto lo inclinas), si no, el teclado
+        moveInput = touch.sqrMagnitude > 0f ? touch : keyboard.normalized;
 
         // Actualizamos estado básico
         if (moveInput != Vector2.zero)

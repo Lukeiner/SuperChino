@@ -1,0 +1,59 @@
+.hud-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.joystick-zone {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: 75%;
+}
+
+.joystick-base {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 130px;
+    border-width: 6px;
+    border-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(20, 40, 40, 0.35);
+    visibility: hidden;
+}
+
+.joystick-knob {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    border-width: 6px;
+    border-color: rgb(255, 255, 255);
+    background-color: rgb(71, 132, 132);
+    visibility: hidden;
+}
+
+.hud-button {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    width: 150px;
+    height: 150px;
+    margin: 0;
+    padding: 0;
+    border-radius: 75px;
+    border-width: 6px;
+    border-color: rgb(255, 255, 255);
+    background-color: rgb(71, 132, 132);
+    color: rgb(20, 40, 40);
+    font-size: 70px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.hud-button:active {
+    background-color: rgb(52, 91, 91);
+}

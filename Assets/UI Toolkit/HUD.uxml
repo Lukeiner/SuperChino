@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="HUD.uss" />
+    <ui:VisualElement name="HUDRoot" class="hud-root" picking-mode="Ignore">
+        <ui:VisualElement name="JoystickZone" class="joystick-zone">
+            <ui:VisualElement name="JoystickBase" class="joystick-base" picking-mode="Ignore" />
+            <ui:VisualElement name="JoystickKnob" class="joystick-knob" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:Button name="pauseButton" text="II" class="hud-button" />
+    </ui:VisualElement>
+</ui:UXML>
