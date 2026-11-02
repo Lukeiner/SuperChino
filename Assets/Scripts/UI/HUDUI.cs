@@ -65,7 +65,7 @@ public class HUDUI : MonoBehaviour
     private void OnPauseClicked()
     {
         if (pauseMenu == null)
-            pauseMenu = FindFirstObjectByType<PauseMenuUI>();
+            pauseMenu = FindAnyObjectByType<PauseMenuUI>();
 
         if (pauseMenu != null)
             pauseMenu.ShowPauseMenu();

@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 public enum Faction
 {
@@ -31,5 +32,12 @@ public class PlayerIdentity : MonoBehaviour
     public bool IsLadron()
     {
         return faction == Faction.Ladron;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetIdentityServerRpc(Faction newFaction, RoleType newRole)
+    {
+        // Actualiza la variable o sincroniza el rol por red
+        AssignRole(newFaction, newRole);
     }
 }

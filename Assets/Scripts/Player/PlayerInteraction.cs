@@ -21,7 +21,13 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (currentInteractable != null && Input.GetKeyDown(interactKey))
+        // Si estamos en fase de debate o fuera de la fase de tareas, no leemos interacción
+        if (RoundManager.Instance != null && RoundManager.Instance.currentGameState.Value != RoundManager.GameState.TaskPhase)
+        {
+            return;
+        }
+
+        if (currentInteractable != null && !currentInteractable.isCompleted.Value && Input.GetKeyDown(interactKey))
         {
             TryInteractWithCurrentObject();
         }
