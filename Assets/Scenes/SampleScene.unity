@@ -2933,7 +2933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerModular
   ShowTopMostFoldoutHeaderGroup: 1
-  objetoPrefab: {fileID: 2046077227}
+  objetoPrefab: {fileID: 6186105511948810956, guid: b4b72263fe9e5144cb1015e84413ad76, type: 3}
   puntosSpawn:
   - {fileID: 2065752509}
   - {fileID: 1677740944}
@@ -2943,7 +2943,7 @@ MonoBehaviour:
   - {fileID: 713451769}
   - {fileID: 848961898}
   cantidadAlIniciar: 5
-  limiteMaxDeObjetosEnEscena: 6
+  limiteMaxDeObjetosEnEscena: 5
   tiempoDeEsperaDeSpawn: 0
 --- !u!4 &1900812791
 Transform:
