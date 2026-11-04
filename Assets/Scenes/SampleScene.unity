@@ -2887,7 +2887,7 @@ GameObject:
   - component: {fileID: 1900812789}
   - component: {fileID: 1900812790}
   m_Layer: 0
-  m_Name: SpawnerModular
+  m_Name: SpawnerModularDeObjetosRobables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
