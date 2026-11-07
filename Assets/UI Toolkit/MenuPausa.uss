@@ -1,0 +1,87 @@
+/* ===== MENU DE PAUSA: portapapeles =====
+   Las medidas son en pixeles de las imagenes del portapapeles (764 x 1062).
+   El script PausaAnimaciones achica la tabla entera para que entre en pantalla. */
+
+.tabla {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 764px; height: 1062px;
+    margin-left: -382px; margin-top: -531px;   /* la mitad del tamano: queda centrada */
+    transform-origin: center;
+}
+
+.cara {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+}
+.cara-frente { background-image: url("../Sprites/Pausa/portapapeles_frente.png"); }
+.cara-atras  { background-image: url("../Sprites/Pausa/portapapeles_atras.png"); }
+
+/* ---------- Letra de lapiz ---------- */
+.lapiz {
+    position: absolute;
+    margin: 0; padding: 0;
+    -unity-font-definition: url("../Fonts/ShadowsIntoLight.ttf");
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    color: rgb(52, 52, 58);   /* gris grafito, no negro puro: parece lapiz */
+}
+
+/* ---------- FRENTE ---------- */
+.titulo-pausa { left: 84px; width: 609px; top: 215px; height: 150px; font-size: 140px; letter-spacing: 6px; rotate: -3deg; }
+.raya-titulo  { position: absolute; left: 245px; width: 290px; top: 360px; height: 7px; border-radius: 4px; background-color: rgba(52, 52, 58, 0.85); rotate: -2deg; }
+
+.lapiz-boton {
+    left: 84px; width: 609px; height: 120px;
+    font-size: 104px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    transition-property: scale, color;
+    transition-duration: 0.15s;
+}
+.lapiz-boton:hover  { scale: 1.06 1.06; color: rgb(20, 20, 24); background-color: rgba(0, 0, 0, 0); }
+.lapiz-boton:active { scale: 0.95 0.95; background-color: rgba(0, 0, 0, 0); }
+
+/* Raya de lapiz que se dibuja debajo al pasar el dedo / mouse */
+.subrayado {
+    position: absolute; left: 22%; right: 22%; bottom: 12px; height: 6px;
+    border-radius: 3px;
+    background-color: rgba(52, 52, 58, 0.85);
+    rotate: 1.5deg;
+    scale: 0 1;
+    transition-property: scale;
+    transition-duration: 0.2s;
+}
+.lapiz-boton:hover .subrayado { scale: 1 1; }
+
+.b-reanudar { top: 440px; rotate: -1.5deg; }
+.b-opciones { top: 590px; rotate: 1deg; }
+.b-salir    { top: 740px; rotate: -1deg; }
+
+/* ---------- ATRAS ---------- */
+/* El papel dibujado esta girado unos 2.5 grados a la izquierda: el texto gira igual */
+.papel-atras { position: absolute; left: 162px; top: 222px; width: 434px; height: 520px; rotate: -2.5deg; }
+
+.titulo-opciones   { left: 0; right: 0; top: 22px;  height: 110px; font-size: 96px; }
+.etiqueta-volumen  { left: 0; right: 0; top: 150px; height: 70px;  font-size: 66px; }
+.porcentaje        { left: 0; right: 0; top: 300px; height: 60px;  font-size: 56px; }
+.b-volver          { left: 0; width: 434px; top: 385px; height: 105px; font-size: 88px; }
+
+/* ---------- Slider (derecho, sin girar) ---------- */
+.lapiz-slider { position: absolute; left: 200px; top: 455px; width: 358px; height: 64px; margin: 0; padding: 0; }
+.lapiz-slider > .unity-label { display: none; }
+.lapiz-slider .unity-base-slider__input { height: 64px; }
+.lapiz-slider .unity-base-slider__drag-container { height: 64px; }
+.lapiz-slider .unity-base-slider__tracker {
+    height: 14px; top: 25px; margin-top: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 4px; border-color: rgb(52, 52, 58); border-radius: 7px;
+    overflow: hidden;
+}
+.lapiz-relleno { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background-color: rgba(52, 52, 58, 0.7); }  /* lo ajusta el script */
+.lapiz-slider .unity-base-slider__dragger {
+    width: 44px; height: 44px; top: 10px; margin-top: 0; margin-left: -22px;
+    border-radius: 22px; border-width: 5px; border-color: rgb(40, 40, 46);
+    background-color: rgb(232, 232, 232);
+}
+.lapiz-slider .unity-base-slider__dragger-border { display: none; }

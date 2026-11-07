@@ -267,8 +267,34 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3730003577079078718, guid: e51233f17ff5b4d4caec2b18dd1b9f77, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5810055840465682321, guid: e51233f17ff5b4d4caec2b18dd1b9f77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 813332419}
   m_SourcePrefab: {fileID: 100100000, guid: e51233f17ff5b4d4caec2b18dd1b9f77, type: 3}
+--- !u!1 &813332418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5810055840465682321, guid: e51233f17ff5b4d4caec2b18dd1b9f77, type: 3}
+  m_PrefabInstance: {fileID: 813332417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &813332419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813332418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6792be4e238604c807484b2c863161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuAnimaciones
+  anguloLinternas: 4
+  periodoLinternas: 3.2
+  anguloCartel: 2.2
+  periodoCartel: 4.2
+  velocidadNube1: 55
+  velocidadNube2: 38
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

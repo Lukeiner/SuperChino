@@ -21,10 +21,12 @@ public class MainMenuUI : MonoBehaviour
     private Button backCreditsButton;
 
     private Slider volumeSlider;
+    private MenuAnimaciones animaciones; // hace el zoom a la radio
 
     private void OnEnable()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        animaciones = GetComponent<MenuAnimaciones>();
 
         mainContainer = Find<VisualElement>(root, "MenuContainer");
         optionsContainer = Find<VisualElement>(root, "OptionsContainer");
@@ -43,8 +45,8 @@ public class MainMenuUI : MonoBehaviour
         Hook(optionsButton, OpenOptions);
         Hook(creditsButton, OpenCredits);
         Hook(quitButton, QuitGame);
-        Hook(backOptionsButton, ShowMainMenu);
-        Hook(backCreditsButton, ShowMainMenu);
+        Hook(backOptionsButton, CloseOptions);
+        Hook(backCreditsButton, CloseCredits);
 
         if (volumeSlider != null)
         {
@@ -67,8 +69,8 @@ public class MainMenuUI : MonoBehaviour
         Unhook(optionsButton, OpenOptions);
         Unhook(creditsButton, OpenCredits);
         Unhook(quitButton, QuitGame);
-        Unhook(backOptionsButton, ShowMainMenu);
-        Unhook(backCreditsButton, ShowMainMenu);
+        Unhook(backOptionsButton, CloseOptions);
+        Unhook(backCreditsButton, CloseCredits);
 
         if (volumeSlider != null)
             volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
@@ -79,7 +81,9 @@ public class MainMenuUI : MonoBehaviour
 
     private void PlayGame()
     {
-        SceneManager.LoadScene(IdCodeScene);
+        // Con MenuAnimaciones: zoom a la puerta y transicion a negro antes de cargar la escena
+        if (animaciones != null) animaciones.EntrarAPuerta(() => SceneManager.LoadScene(IdCodeScene));
+        else SceneManager.LoadScene(IdCodeScene);
     }
 
     private void QuitGame()
@@ -98,8 +102,29 @@ public class MainMenuUI : MonoBehaviour
     }
 
 
-    private void OpenOptions() => ShowPanel(optionsContainer);
-    private void OpenCredits() => ShowPanel(creditsContainer);
+    // Con MenuAnimaciones: zoom a la radio y despues muestra Opciones
+    private void OpenOptions()
+    {
+        if (animaciones != null) animaciones.EntrarARadio(() => ShowPanel(optionsContainer));
+        else ShowPanel(optionsContainer);
+    }
+
+    private void CloseOptions()
+    {
+        if (animaciones != null) animaciones.SalirDeRadio(ShowMainMenu);
+        else ShowMainMenu();
+    }
+    private void OpenCredits()
+    {
+        if (animaciones != null) animaciones.EntrarATV(() => ShowPanel(creditsContainer));
+        else ShowPanel(creditsContainer);
+    }
+
+    private void CloseCredits()
+    {
+        if (animaciones != null) animaciones.SalirDeTV(ShowMainMenu);
+        else ShowMainMenu();
+    }
 
     public void ShowMainMenu() => ShowPanel(mainContainer);
     public void HideAll() => ShowPanel(null);
