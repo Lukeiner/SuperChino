@@ -1296,6 +1296,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 790221005}
+  - component: {fileID: 790221006}
+  - component: {fileID: 790221007}
   m_Layer: 0
   m_Name: PuntosSpawnObjetosSaglados
   m_TagString: Untagged
@@ -1325,6 +1327,58 @@ Transform:
   - {fileID: 848961898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &790221006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790221004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1607645217
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &790221007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790221004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c66c7061d11e440b2fa110c48270e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerModular
+  ShowTopMostFoldoutHeaderGroup: 1
+  objetoPrefab: {fileID: 6186105511948810956, guid: b4b72263fe9e5144cb1015e84413ad76, type: 3}
+  puntosSpawn:
+  - {fileID: 2065752509}
+  - {fileID: 1677740944}
+  - {fileID: 2111323493}
+  - {fileID: 506123938}
+  - {fileID: 127910000}
+  - {fileID: 713451769}
+  - {fileID: 848961898}
+  cantidadAlIniciar: 1
+  limiteMaxDeObjetosEnEscena: 7
+  tiempoDeEsperaDeSpawn: 5
 --- !u!1 &848961897
 GameObject:
   m_ObjectHideFlags: 0
