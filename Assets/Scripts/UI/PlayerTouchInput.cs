@@ -71,7 +71,7 @@ public class PlayerTouchInput : NetworkBehaviour
             emojiWheelUI = FindAnyObjectByType<EmojiWheelUI>(FindObjectsInactive.Include);
             if (emojiWheelUI != null)
             {
-                emojiWheelUI.ToggleWheel();
+                emojiWheelUI.OpenWheelWithPopup();
             }
             else
             {
