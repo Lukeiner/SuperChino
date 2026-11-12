@@ -5,6 +5,7 @@
             <ui:VisualElement name="JoystickBase" class="joystick-base" picking-mode="Ignore" />
             <ui:VisualElement name="JoystickKnob" class="joystick-knob" picking-mode="Ignore" />
         </ui:VisualElement>
-        <ui:Button name="pauseButton" text="II" class="hud-button" />
+        <!-- Boton de pausa: sello de oferta. El dibujo trae las dos barras, por eso no lleva texto. -->
+        <ui:Button name="pauseButton" class="hud-button" />
     </ui:VisualElement>
 </ui:UXML>
