@@ -5,26 +5,25 @@ using Unity.Services.Authentication.Server;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-
 public class SpawnerModular : NetworkBehaviour
 {
-    [SerializeField] private GameObject objetoPrefab;//Por aqui desde el inspector asigno que objetos serán los que spawnearan
+    [SerializeField] private GameObject objetoPrefab;//Por aqui desde el inspector asigno que objetos serï¿½n los que spawnearan
     [SerializeField] private Transform[] puntosSpawn;//Aca desde el inspector asigno los puntos de spawn que yo determine desde la gerarquia
     [SerializeField] private int cantidadAlIniciar;//Aca es el lugar para poner desde el inspector cuantos objetos quiero que spawneen de entrada
-    [SerializeField] private int limiteMaxDeObjetosEnEscena;//Determinamos un limite de cantidad de objetos spawneados en el escenario, es más que nada para las Karens (bots), trabaja con otra variable que da la cantidad spawneada hasta el momento *
-    [SerializeField] private float tiempoDeEsperaDeSpawn;//Tiempo de espera para spawnear, asi no es un delirio de objetos de una, da orden y lo hace más orgánico.
+    [SerializeField] private int limiteMaxDeObjetosEnEscena;//Determinamos un limite de cantidad de objetos spawneados en el escenario, es mï¿½s que nada para las Karens (bots), trabaja con otra variable que da la cantidad spawneada hasta el momento *
+    [SerializeField] private float tiempoDeEsperaDeSpawn;//Tiempo de espera para spawnear, asi no es un delirio de objetos de una, da orden y lo hace mï¿½s orgï¿½nico.
     private List<Transform> puntosLibres; //Para que revise la maquina donde tiene posibilidades de spawnear
     private int cantidadDeObjetosSpawneadosActualmente; //Variable deSeguimiento para verificar que las Karens no invadan todo el Chino *
 
-    public override void OnNetworkSpawn()//Hereda esta función de NetworkBehaviour en lugar de Start()
+    public override void OnNetworkSpawn()//Hereda esta funciï¿½n de NetworkBehaviour en lugar de Start()
     {
-        base.OnNetworkSpawn();//Ejecuta la lógica de base del paquete NetworkBehaviour, Netcore registre el componente en la red correctamente
+        base.OnNetworkSpawn();//Ejecuta la lï¿½gica de base del paquete NetworkBehaviour, Netcore registre el componente en la red correctamente
 
         if (!IsServer) return;//Aqui se consulta si es el servidor, si se trat de un cliente lo retournea asi no ejecuta el codico generando caos
 
-        //Seguimos por aca, de ahora en más todo esto solo se ejecutara en el Servidor/Host...
+        //Seguimos por aca, de ahora en mï¿½s todo esto solo se ejecutara en el Servidor/Host...
 
-        puntosLibres = new List<Transform>(puntosSpawn);//Aca creé una lista dinámica con todos los puntos de spawn que cargamos en el array "puntosSpawn"
+        puntosLibres = new List<Transform>(puntosSpawn);//Aca creï¿½ una lista dinï¿½mica con todos los puntos de spawn que cargamos en el array "puntosSpawn"
 
 
         for (int i = 0; i < cantidadAlIniciar; i++)//Al comenzar a ejecutarce el script, primero se debe revizar si ya deben haber objetos spawneados 
@@ -39,7 +38,7 @@ public class SpawnerModular : NetworkBehaviour
     private void SpawnearObjetos()
     {
 
-        if (puntosLibres.Count == 0) return;//Si llegamos a ocupar todos los puntos de spawn detiene la logíca aca
+        if (puntosLibres.Count == 0) return;//Si llegamos a ocupar todos los puntos de spawn detiene la logï¿½ca aca
         if (cantidadDeObjetosSpawneadosActualmente >= limiteMaxDeObjetosEnEscena) return;//Frena el procedimiento si es que ya se ocupo el maximo de lulagres
 
         int indiceAleatorioDeSpawn = Random.Range(0, puntosLibres.Count);//Creamos un indice aleatorio para luego elegir un punto de spawn de la lsita dinamica, de forma random *
@@ -47,8 +46,8 @@ public class SpawnerModular : NetworkBehaviour
         Transform puntoElegido = puntosLibres[indiceAleatorioDeSpawn];
 
         GameObject nuevoObjeto = Instantiate(objetoPrefab, puntoElegido.position, puntoElegido.rotation);//Obtengo su netwokobject y lo instancio para que se replique en todos los clientes
-        nuevoObjeto.GetComponent<NetworkObject>().Spawn();//Aqui hacemos que seactulicen en los clientes también
-        puntosLibres.RemoveAt(indiceAleatorioDeSpawn); //Por ultimo aca eliminamos la posicion que estaba almacenada en el indice que nos dió
+        nuevoObjeto.GetComponent<NetworkObject>().Spawn();//Aqui hacemos que seactulicen en los clientes tambiï¿½n
+        puntosLibres.RemoveAt(indiceAleatorioDeSpawn); //Por ultimo aca eliminamos la posicion que estaba almacenada en el indice que nos diï¿½
 
         cantidadDeObjetosSpawneadosActualmente++;//Vamos contando cuantos lugares se van ocupando
     }

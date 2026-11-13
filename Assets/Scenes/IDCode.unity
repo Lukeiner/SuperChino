@@ -471,6 +471,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cd8c70cca0cfc419c334f74ecf1a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IDCodeUI
+--- !u!1001 &1940970931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.37054
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.07494
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 69425426699872114, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041128502108360354, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041128502108360354, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1140029448
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041128502108360354, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1580170936
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054765754357387296, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
+      propertyPath: m_Name
+      value: Guardia1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6eeba142092a2a24d9e75a9a810d075d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -478,3 +547,4 @@ SceneRoots:
   - {fileID: 241318810}
   - {fileID: 688205633}
   - {fileID: 1616876607}
+  - {fileID: 1940970931}
