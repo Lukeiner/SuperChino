@@ -31,12 +31,11 @@ MonoBehaviour:
   m_Variables:
   - rid: 2427203014227394760
   - rid: 2427203014227394770
-  - rid: 2427203014227394781
   - rid: 2427203014227394791
   - rid: 2427203014227394803
   - rid: 2427203014227394819
   - rid: 2427203014227394835
-  m_VersionTimestamp: 639301880904021088
+  m_VersionTimestamp: 639301883366985732
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 1911176040005046218}
@@ -63,16 +62,6 @@ MonoBehaviour:
         IsExposed: 1
         m_IsShared: 0
         m_Value: 5
-    - rid: 2427203014227394781
-      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 16728168410220551346
-          m_Value1: 6571652574673506724
-        Name: distanciaSensor
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: 0
     - rid: 2427203014227394791
       type: {class: 'TypedVariableModel`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -129,7 +118,8 @@ MonoBehaviour:
   m_Description: 
   m_Nodes:
   - rid: 2427203014227394761
-  m_VersionTimestamp: 639301880907269728
+  - rid: 2427203014227394882
+  m_VersionTimestamp: 639301966104639279
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -6230141059371918499}
   m_RuntimeGraph: {fileID: 998754579379076806}
@@ -150,6 +140,27 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
     IsPlaceholder: 0
+  - Name: Buscar Punto Mas Cercano Por Tag
+    Story: '[Self] buscar punto con tag [tagBuscada] mas cercano y guardar en [destinoTransform]'
+    RuntimeTypeString: DetectarPuntoMasCercanoAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 0
+      m_Value1: 0
+    Variables:
+    - Name: Self
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: tagBuscada
+      Type:
+        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: destinoTransform
+      Type:
+        m_SerializableType: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: -1536399155402191776}
   m_CommandBuffer:
@@ -163,6 +174,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 2427203014227394761
       type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -189,7 +202,111 @@ MonoBehaviour:
         m_IsFloating: 0
         m_NodeModel:
           rid: 2427203014227394761
+        m_Connections:
+        - rid: 2427203014227394883
+    - rid: 2427203014227394882
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 0.87998533, y: 115.12005}
+        ID:
+          m_Value0: 13258981469074130080
+          m_Value1: 3323100210536190895
+        Parents: []
+        PortModels:
+        - rid: 2427203014227394883
+        - rid: 2427203014227394884
+        NodeType:
+          m_SerializableType: DetectarPuntoMasCercanoAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 0
+          m_Value1: 0
+        m_FieldValues:
+        - rid: 2427203014227394885
+        - rid: 2427203014227394895
+        - rid: 2427203014227394896
+    - rid: 2427203014227394883
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2427203014227394882
+        m_Connections:
+        - rid: 2427203014227394762
+    - rid: 2427203014227394884
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 2427203014227394882
         m_Connections: []
+    - rid: 2427203014227394885
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Self
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2427203014227394887
+        LinkedVariable:
+          rid: 2427203014227394888
+    - rid: 2427203014227394887
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394888
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394895
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: tagBuscada
+        Type:
+          m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 2427203014227394897
+        LinkedVariable:
+          rid: -2
+    - rid: 2427203014227394896
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: destinoTransform
+        Type:
+          m_SerializableType: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 2427203014227394898
+        LinkedVariable:
+          rid: -2
+    - rid: 2427203014227394897
+      type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: Caja
+    - rid: 2427203014227394898
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
 --- !u!114 &998754579379076806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,8 +339,8 @@ MonoBehaviour:
           rid: 2427203014227394764
         BlackboardGroupReferences: []
         Root:
-          rid: 2427203014227394866
-        m_VersionTimestamp: 639301880907269728
+          rid: 2427203014227394903
+        m_VersionTimestamp: 639301966104639279
     - rid: 2427203014227394764
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -234,14 +351,77 @@ MonoBehaviour:
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Variables:
-        - rid: 2427203014227394867
-        - rid: 2427203014227394868
-        - rid: 2427203014227394869
-        - rid: 2427203014227394870
-        - rid: 2427203014227394871
-        - rid: 2427203014227394872
-        - rid: 2427203014227394873
-    - rid: 2427203014227394866
+        - rid: 2427203014227394875
+        - rid: 2427203014227394876
+        - rid: 2427203014227394877
+        - rid: 2427203014227394878
+        - rid: 2427203014227394879
+        - rid: 2427203014227394880
+    - rid: 2427203014227394875
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394876
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1263281636024561435
+          m_Value1: 8369143915986351619
+        Name: velocidadMov
+        m_Value: 5
+    - rid: 2427203014227394877
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5259818097903432500
+          m_Value1: 12472015553827260134
+        Name: areaCaja
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394878
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9339476988297161342
+          m_Value1: 8398370109010069199
+        Name: yaAtendido
+        m_Value: 0
+    - rid: 2427203014227394879
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13278674815704383074
+          m_Value1: 10046835164679107733
+        Name: Caja
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394880
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 412594725003404240
+          m_Value1: 15672099872122697103
+        Name: Salida
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394901
+      type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: Caja
+    - rid: 2427203014227394902
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 2427203014227394903
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -252,65 +432,25 @@ MonoBehaviour:
         m_Parent:
           rid: -2
         m_Child:
-          rid: -2
+          rid: 2427203014227394904
         Repeat: 1
         AllowMultipleRepeatsPerTick: 0
-    - rid: 2427203014227394867
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 2427203014227394904
+      type: {class: DetectarPuntoMasCercanoAction, ns: , asm: Assembly-CSharp}
       data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 0}
-    - rid: 2427203014227394868
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1263281636024561435
-          m_Value1: 8369143915986351619
-        Name: velocidadMov
-        m_Value: 5
-    - rid: 2427203014227394869
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 16728168410220551346
-          m_Value1: 6571652574673506724
-        Name: distanciaSensor
-        m_Value: 0
-    - rid: 2427203014227394870
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 5259818097903432500
-          m_Value1: 12472015553827260134
-        Name: areaCaja
-        m_Value: {fileID: 0}
-    - rid: 2427203014227394871
-      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 9339476988297161342
-          m_Value1: 8398370109010069199
-        Name: yaAtendido
-        m_Value: 0
-    - rid: 2427203014227394872
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13278674815704383074
-          m_Value1: 10046835164679107733
-        Name: Caja
-        m_Value: {fileID: 0}
-    - rid: 2427203014227394873
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 412594725003404240
-          m_Value1: 15672099872122697103
-        Name: Salida
-        m_Value: {fileID: 0}
+        ID:
+          m_Value0: 13258981469074130080
+          m_Value1: 3323100210536190895
+        Graph:
+          rid: 2427203014227394763
+        m_Parent:
+          rid: 2427203014227394903
+        Self:
+          rid: 2427203014227394875
+        tagBuscada:
+          rid: 2427203014227394901
+        destinoTransform:
+          rid: 2427203014227394902
 --- !u!114 &1911176040005046218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: Cliente Blackboard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639301880904021088
+  VersionTimestamp: 639301883366985732
   AssetID:
     m_Value0: 0
     m_Value1: 0
@@ -331,7 +471,6 @@ MonoBehaviour:
     m_Variables:
     - rid: 2427203014227394768
     - rid: 2427203014227394774
-    - rid: 2427203014227394786
     - rid: 2427203014227394797
     - rid: 2427203014227394810
     - rid: 2427203014227394827
@@ -356,14 +495,6 @@ MonoBehaviour:
           m_Value1: 8369143915986351619
         Name: velocidadMov
         m_Value: 5
-    - rid: 2427203014227394786
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 16728168410220551346
-          m_Value1: 6571652574673506724
-        Name: distanciaSensor
-        m_Value: 0
     - rid: 2427203014227394797
       type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
