@@ -1,6 +1,3 @@
-/* ===== HUD: estilo sello de oferta (rojo y blanco) =====
-   Las imagenes estan en Assets/Sprites/HUD. HUDUI.cs usa 260 px (base) y 120 px (perilla):
-   si cambias esos tamanos aca, cambia tambien las constantes del script. */
 
 .hud-root {
     position: absolute;
@@ -29,7 +26,7 @@
     visibility: hidden;
 }
 
-/* Boton de pausa: se saca todo el estilo por defecto del Button y se deja solo la imagen */
+/*Boton de pausa: se saca todo el estilo por defecto del Button y se deja solo la imagen */
 .hud-button {
     position: absolute;
     top: 40px; right: 60px;
