@@ -3,12 +3,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+/// menu de pausa (UI Toolkit). Un solo script reemplaza a PauseManager mas PauseMenuUI.
+/// es un overlay, no frena la partida los demas jugadores siguen jugando
+/// Va en el mismo GameObject que el UIDocument (UIPauseDocument).
+
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuUI : MonoBehaviour
 {
     private const string IdCodeScene = "IDCode";
     private const string VolumeKey = "GameVolume";
 
+    // opacidad del fondo oscuro detras del menu
+    private const float DimOpacity = 0.6f;
+
+    private VisualElement dimLayer;
     private VisualElement pauseContainer;
     private VisualElement optionsContainer;
 
@@ -19,9 +27,15 @@ public class PauseMenuUI : MonoBehaviour
 
     private Slider volumeSlider;
 
+    // animaciones del portapapeles
+    private PausaAnimaciones animaciones;
+
     private void OnEnable()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+
+        CreateDimLayer(root);
+        animaciones = GetComponent<PausaAnimaciones>();
 
         pauseContainer = Find<VisualElement>(root, "PauseContainer");
         optionsContainer = Find<VisualElement>(root, "PauseOptionsContainer");
@@ -49,7 +63,7 @@ public class PauseMenuUI : MonoBehaviour
             volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
         }
 
-        HideAll();
+        ShowPanel(null);// al arrancar, todo oculto y sin animación
     }
 
     private void OnDisable()
@@ -62,11 +76,16 @@ public class PauseMenuUI : MonoBehaviour
         if (volumeSlider != null)
             volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
 
+        // Se quita para que, si el objeto se vuelve a activar, no se agregue una segunda capa.
+        dimLayer?.RemoveFromHierarchy();
+        dimLayer = null;
+
         PlayerPrefs.Save();
     }
 
     private void Update()
     {
+        // En Android, botón para abrir y cerrar el menu de pausa
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
         if (IsOptionsOpen)
@@ -85,6 +104,7 @@ public class PauseMenuUI : MonoBehaviour
 
     private void LeaveMatch()
     {
+        // si hay sesión de red (host o cliente), se cierra antes de salir.
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
             NetworkManager.Singleton.Shutdown();
 
@@ -97,15 +117,65 @@ public class PauseMenuUI : MonoBehaviour
         AudioListener.volume = evt.newValue;
     }
 
-    private void OpenOptions() => ShowPanel(optionsContainer);
+    // da vuelta el portapapeles animacion
+    private void OpenOptions()
+    {
+        if (animaciones == null) { ShowPanel(optionsContainer); return; }
+        if (animaciones.Ocupado) return;
+        animaciones.Girar(() => ShowPanel(optionsContainer));
+    }
 
-    public void ShowPauseMenu() => ShowPanel(pauseContainer);
-    public void HideAll() => ShowPanel(null);
+    // usa el boton de pausa del hud
+    public void ShowPauseMenu()
+    {
+        if (animaciones == null) { ShowPanel(pauseContainer); return; }
+        if (animaciones.Ocupado || IsPauseOpen) return;
+
+        if (IsOptionsOpen)
+            animaciones.Girar(() => ShowPanel(pauseContainer));
+        else
+        {
+            ShowPanel(pauseContainer);
+            animaciones.Entrar();
+        }
+    }
+
+    public void HideAll()
+    {
+        bool abierto = IsPauseOpen || IsOptionsOpen;
+        if (animaciones == null || !abierto) { ShowPanel(null); return; }
+        if (animaciones.Ocupado) return;
+        animaciones.Salir(() => ShowPanel(null));
+    }
 
     private void ShowPanel(VisualElement panelToShow)
     {
         SetVisible(pauseContainer, panelToShow == pauseContainer);
         SetVisible(optionsContainer, panelToShow == optionsContainer);
+
+        // el fondo oscuro se ve mientras haya cualquier panel de la pausa abierto.
+        SetVisible(dimLayer, panelToShow != null);
+    }
+
+    // capa negra semitransparente a pantalla completa, detras de los paneles
+    // se crea por código para no tocar PauseMenu.uxml
+    // de los menus se puede pasar a un elemento del UXML con su clase en el USS
+    private void CreateDimLayer(VisualElement root)
+    {
+        dimLayer = new VisualElement { name = "PauseDimLayer" };
+        dimLayer.style.position = Position.Absolute;
+        dimLayer.style.left = 0;
+        dimLayer.style.right = 0;
+        dimLayer.style.top = 0;
+        dimLayer.style.bottom = 0;
+        dimLayer.style.backgroundColor = new Color(0f, 0f, 0f, DimOpacity);
+
+        // position: la capa agarra los toques, asi no llegan al HUD de abajo
+        // mientras la pausa está abierta.
+        dimLayer.pickingMode = PickingMode.Position;
+
+        // indice 0 = al fondo: queda detras de los paneles del UXML
+        root.Insert(0, dimLayer);
     }
 
     private static void SetVisible(VisualElement element, bool visible)

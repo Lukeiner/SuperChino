@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=5f71195ba9db7094e970857de47981b1&amp;type=3#ButtonStyle"/>
+    <ui:VisualElement name="PauseContainer" style="flex-grow: 1; display: none; opacity: 1;">
+        <ui:Label text="PAUSA" style="font-size: 150px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 10px 50px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); top: 0; margin-top: 100px;"/>
+        <ui:Button text="REANUDAR" name="resumeButton" class="buttonstyle"/>
+        <ui:Button text="OPCIONES" name="optionsButton" class="buttonstyle"/>
+        <ui:Button text="SALIR" name="quitButton" class="buttonstyle"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="PauseOptionsContainer" style="flex-grow: 1; display: none;">
+        <ui:Label text="OPCIONES" style="font-size: 150px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 10px 50px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); top: 0; margin-top: 100px;"/>
+        <ui:Slider label="VOLUMEN" value="42" high-value="100" name="volumeSlider" class="buttonstyle" style="position: relative; align-self: center; -unity-font-style: bold; font-size: 110px; background-position-y: center; -unity-background-scale-mode: stretch-to-fill; background-position-x: center; -unity-text-align: upper-left; background-size: 0% 0%; width: 1385px; white-space: normal; text-overflow: clip; transition-duration: 0s; -unity-text-auto-size: best-fit 110px 110px; -unity-slice-left: 0; height: 150px; -unity-slice-type: sliced; -unity-text-generator: advanced;"/>
+        <ui:Button text="VOLVER" name="backButton" class="buttonstyle"/>
+    </ui:VisualElement>
+</ui:UXML>

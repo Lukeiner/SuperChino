@@ -1,22 +1,68 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=5f71195ba9db7094e970857de47981b1&amp;type=3#ButtonStyle"/>
-    <ui:VisualElement name="MenuContainer" style="flex-grow: 1; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(190, 146, 78); display: flex;">
-        <ui:Label text="SUPER CHINO" name="" style="font-size: 150px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 10px 50px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); top: 0; margin-top: 100px;"/>
-        <ui:Button text="INICIO" name="playButton" class="buttonstyle"/>
-        <ui:Button text="OPCIONES" name="settingsButton" class="buttonstyle"/>
-        <ui:Button text="CREDITOS" name="creditsButton" class="buttonstyle"/>
-        <ui:Button text="SALIR" name="quitButton" class="buttonstyle"/>
+    <Style src="MenuPrincipal.uss"/>
+    <ui:VisualElement name="MenuContainer" class="menu-container">
+        <ui:VisualElement name="Escenario" class="escenario" picking-mode="Ignore">
+            <ui:VisualElement name="Cielo" class="capa-completa cielo" picking-mode="Ignore"/>
+            <ui:VisualElement name="LinternaIzq" class="pieza linterna-izq" picking-mode="Ignore"/>
+            <ui:VisualElement name="LinternaDer" class="pieza linterna-der" picking-mode="Ignore"/>
+            <ui:VisualElement name="Gato" class="pieza gato" picking-mode="Ignore"/>
+            <ui:VisualElement name="TV" class="pieza tv" picking-mode="Ignore"/>
+            <ui:VisualElement name="TVLuz" class="tv-luz" picking-mode="Ignore"/>
+            <ui:VisualElement name="Cartel" class="pieza cartel" picking-mode="Ignore">
+                <ui:Label text="JUGAR" name="TxtCartel" class="txt txt-cartel" picking-mode="Ignore"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Radio" class="pieza radio" picking-mode="Ignore"/>
+            <ui:VisualElement name="RadioLuz" class="radio-luz" picking-mode="Ignore"/>
+            <ui:Label text="SUPER CHINO" name="TxtTitulo" class="txt txt-titulo" picking-mode="Ignore"/>
+            <ui:Label text="SE BUSCA&#10;PERSONAL" name="TxtTV" class="txt txt-tv" picking-mode="Ignore"/>
+            <ui:Label text="CREDITOS" name="TxtCreditos" class="txt txt-creditos" picking-mode="Ignore"/>
+            <ui:Label text="OPCIONES" name="TxtRadio" class="txt txt-radio" picking-mode="Ignore"/>
+            <ui:Button name="playButton" class="zona zona-jugar"/>
+            <ui:Button name="settingsButton" class="zona zona-opciones"/>
+            <ui:Button name="creditsButton" class="zona zona-creditos"/>
+            <ui:Button name="quitButton" class="zona zona-salir"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Fundido" class="fundido" picking-mode="Ignore"/>
     </ui:VisualElement>
-    <ui:VisualElement name="OptionsContainer" style="flex-grow: 1; display: none; background-color: rgb(156, 60, 60); border-top-left-radius: 160px; border-top-right-radius: 160px; border-bottom-right-radius: 160px; border-bottom-left-radius: 160px; border-top-width: 230px; border-right-width: 230px; border-bottom-width: 230px; border-left-width: 230px; scale: 1 1;">
-        <ui:Label text="OPCIONES" style="font-size: 150px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 10px 50px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); top: 0; margin-top: 100px;"/>
-        <ui:Slider label="VOLUMEN" value="42" high-value="100" name="volumeSlider" class="buttonstyle" style="position: relative; align-self: center; -unity-font-style: bold; font-size: 110px; background-position-y: center; -unity-background-scale-mode: stretch-to-fill; background-position-x: center; -unity-text-align: upper-left; background-size: 0% 0%; width: 1385px; white-space: normal; text-overflow: clip; transition-duration: 0s; -unity-text-auto-size: best-fit 110px 110px; -unity-slice-left: 0; height: 150px; -unity-slice-type: sliced; -unity-text-generator: advanced;"/>
-        <ui:Button text="VOLVER" name="backOptionsButton" class="buttonstyle" style="display: flex;"/>
+    <ui:VisualElement name="OptionsContainer" class="pantalla-completa" style="display: none;">
+        <ui:VisualElement name="RadioEscenario" class="radio-escenario">
+            <ui:VisualElement name="RadioBrillo" class="radio-brillo" picking-mode="Ignore"/>
+            <ui:Label text="OPCIONES" class="lcd-titulo" picking-mode="Ignore"/>
+            <ui:Label text="VOLUMEN" class="lcd-etiqueta" picking-mode="Ignore"/>
+            <ui:Slider name="volumeSlider" low-value="0" high-value="1" value="1" class="lcd-slider"/>
+            <ui:Label name="VolumenPorcentaje" text="100%" class="lcd-porcentaje" picking-mode="Ignore"/>
+            <ui:Button text="VOLVER" name="backOptionsButton" class="lcd-boton"/>
+        </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="CreditsContainer" style="flex-grow: 1; background-color: rgb(0, 0, 0); display: none;">
-        <ui:GroupBox style="top: 173px;">
-            <ui:Label text="CREDITOS" name="" style="font-size: 100px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-width: 0; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 10px 50px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); top: 0; margin-top: 13px; background-position-y: center; background-position-x: center; -unity-text-generator: advanced; -unity-text-auto-size: none; white-space: nowrap; padding-top: -39px; padding-right: -39px; padding-bottom: -39px; padding-left: -39px; margin-right: 13px; margin-bottom: 13px; margin-left: 13px;"/>
-            <ui:Label text="GRAMACION/DESING: LUCAS, FERNANDEZ&#10;GRAMACION/ARTE: LEONARDO, INES MEDINA&#10;GRAMACION/SONIDO: LUJAN, HERNANDEZ" style="top: 0; background-color: rgba(255, 255, 255, 0); color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-align: middle-center; font-size: 30px;"/>
-            <ui:Button text="SALIR" name="backCreditsButton" class="buttonstyle" style="top: auto; bottom: auto; transform-origin: center; flex-wrap: nowrap; flex-direction: column;"/>
-        </ui:GroupBox>
+    <ui:VisualElement name="CreditsContainer" class="pantalla-completa creditos" style="display: none;">
+        <ui:VisualElement name="Estrellas" class="estrellas" picking-mode="Ignore"/>
+        <ui:Label name="CreditosIntro" text="HACE MUCHO TIEMPO, EN UN SUPERMERCADO&#10;MUY, MUY LEJANO..." class="cred-intro" picking-mode="Ignore"/>
+        <ui:Label name="CreditosLogo" text="SUPER&#10;CHINO" class="cred-logo" picking-mode="Ignore"/>
+        <ui:VisualElement name="CreditosTexto" class="cred-texto" picking-mode="Ignore">
+            <ui:Label text="EPISODIO I" class="cred-linea cred-episodio"/>
+            <ui:Label text="EL REPOSITOR FANTASMA" class="cred-linea cred-subtitulo"/>
+            <ui:Label text="ES UNA EPOCA DE CAOS EN EL" class="cred-linea"/>
+            <ui:Label text="SUPER CHINO. CUATRO EMPLEADOS" class="cred-linea"/>
+            <ui:Label text="INTENTAN REPONER LAS GONDOLAS" class="cred-linea"/>
+            <ui:Label text="ANTES DEL CIERRE, PERO UNO DE" class="cred-linea"/>
+            <ui:Label text="ELLOS ES UN IMPOSTOR QUE" class="cred-linea"/>
+            <ui:Label text="ESCONDE LA MERCADERIA SAGRADA." class="cred-linea"/>
+            <ui:Label text="MIENTRAS EL GUARDIA VIGILA Y" class="cred-linea"/>
+            <ui:Label text="LOS CLIENTES DE CARTON RONDAN" class="cred-linea"/>
+            <ui:Label text="LOS PASILLOS, SOLO EL TRABAJO" class="cred-linea"/>
+            <ui:Label text="EN EQUIPO PODRA SALVAR" class="cred-linea"/>
+            <ui:Label text="LA TIENDA..." class="cred-linea"/>
+            <ui:Label text=" " class="cred-linea cred-espacio"/>
+            <ui:Label text="GAME DESIGN Y RED" class="cred-linea cred-rol"/>
+            <ui:Label text="LUCAS FERNANDEZ" class="cred-linea cred-nombre"/>
+            <ui:Label text="ARTE, UI Y CONTROLES" class="cred-linea cred-rol"/>
+            <ui:Label text="LEONARDO INES MEDINA" class="cred-linea cred-nombre"/>
+            <ui:Label text="SONIDO Y MUSICA" class="cred-linea cred-rol"/>
+            <ui:Label text="LUJAN HERNANDEZ" class="cred-linea cred-nombre"/>
+            <ui:Label text=" " class="cred-linea cred-espacio"/>
+            <ui:Label text="GRACIAS POR JUGAR" class="cred-linea cred-gracias"/>
+        </ui:VisualElement>
+        <ui:Button text="VOLVER" name="backCreditsButton" class="cred-boton"/>
     </ui:VisualElement>
 </ui:UXML>

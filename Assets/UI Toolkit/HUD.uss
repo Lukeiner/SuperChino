@@ -1,59 +1,44 @@
+
 .hud-root {
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; right: 0; top: 0; bottom: 0;
 }
 
 .joystick-zone {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50%;
-    height: 75%;
+    left: 0; bottom: 0;
+    width: 50%; height: 75%;
 }
 
 .joystick-base {
     position: absolute;
-    width: 260px;
-    height: 260px;
-    border-radius: 130px;
-    border-width: 6px;
-    border-color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(20, 40, 40, 0.35);
+    width: 260px; height: 260px;
+    background-image: url("../Sprites/HUD/hud_joystick_base.png");
+    -unity-background-scale-mode: scale-to-fit;
     visibility: hidden;
 }
 
 .joystick-knob {
     position: absolute;
-    width: 120px;
-    height: 120px;
-    border-radius: 60px;
-    border-width: 6px;
-    border-color: rgb(255, 255, 255);
-    background-color: rgb(71, 132, 132);
+    width: 120px; height: 120px;
+    background-image: url("../Sprites/HUD/hud_joystick_knob.png");
+    -unity-background-scale-mode: scale-to-fit;
     visibility: hidden;
 }
 
+/*Boton de pausa: se saca todo el estilo por defecto del Button y se deja solo la imagen */
 .hud-button {
     position: absolute;
-    top: 40px;
-    right: 60px;
-    width: 150px;
-    height: 150px;
-    margin: 0;
-    padding: 0;
-    border-radius: 75px;
-    border-width: 6px;
-    border-color: rgb(255, 255, 255);
-    background-color: rgb(71, 132, 132);
-    color: rgb(20, 40, 40);
-    font-size: 70px;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
+    top: 40px; right: 60px;
+    width: 150px; height: 150px;
+    margin: 0; padding: 0;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../Sprites/HUD/hud_boton_pausa.png");
+    -unity-background-scale-mode: scale-to-fit;
+    transition-property: scale;
+    transition-duration: 0.12s;
 }
 
-.hud-button:active {
-    background-color: rgb(52, 91, 91);
-}
+.hud-button:hover  { background-color: rgba(0, 0, 0, 0); }
+.hud-button:active { background-color: rgba(0, 0, 0, 0); scale: 0.9 0.9; }  /* se hunde al tocarlo */
