@@ -2237,7 +2237,7 @@ GameObject:
   - component: {fileID: 970226210}
   - component: {fileID: 970226209}
   - component: {fileID: 970226208}
-  - component: {fileID: 970226207}
+  - component: {fileID: 970226212}
   m_Layer: 0
   m_Name: ObjetodePrueba (1)
   m_TagString: Untagged
@@ -2260,33 +2260,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 216588003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &970226207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970226205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0130b71eb19a3884e9ee3c5ee0077601, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectInteraction
-  ShowTopMostFoldoutHeaderGroup: 1
-  objectName: Charco de agua
-  reqIsLadron: 0
-  requiredRole: 0
-  successDialog: "\xA1Limpiaste el charquito!"
-  failDialog: Te tropezaste.
-  interactionTime: 4
-  objectSpriteRenderer: {fileID: 970226211}
-  successColor: {r: 0, g: 1, b: 0, a: 1}
-  failColor: {r: 1, g: 0, b: 0, a: 1}
-  isCompleted:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!114 &970226208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2446,6 +2419,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &970226212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970226205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 846a1ce3572a1694e9c605ed3ef3a043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmployeeTask
+  ShowTopMostFoldoutHeaderGroup: 1
+  objectName: Objeto Interactivo
+  baseInteractionTime: 4
+  objectSpriteRenderer: {fileID: 0}
+  successColor: {r: 0, g: 1, b: 0, a: 1}
+  failColor: {r: 1, g: 0, b: 0, a: 1}
+  isCompleted:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  requiredRole: 0
 --- !u!1 &1082104123
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,7 +2658,7 @@ GameObject:
   - component: {fileID: 1227583463}
   - component: {fileID: 1227583462}
   - component: {fileID: 1227583466}
-  - component: {fileID: 1227583461}
+  - component: {fileID: 1227583467}
   m_Layer: 0
   m_Name: ObjetodePrueba
   m_TagString: Untagged
@@ -2669,33 +2666,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1227583461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227583460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0130b71eb19a3884e9ee3c5ee0077601, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectInteraction
-  ShowTopMostFoldoutHeaderGroup: 1
-  objectName: "G\xF3ndola de Fideos"
-  reqIsLadron: 0
-  requiredRole: 1
-  successDialog: "\xA1Reposiste la g\xF3ndola con \xE9xito!"
-  failDialog: "No sab\xE9s c\xF3mo hacer este trabajo."
-  interactionTime: 4
-  objectSpriteRenderer: {fileID: 1227583464}
-  successColor: {r: 0, g: 1, b: 0, a: 1}
-  failColor: {r: 1, g: 0, b: 0, a: 1}
-  isCompleted:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!58 &1227583462
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2870,6 +2840,30 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1227583467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227583460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 846a1ce3572a1694e9c605ed3ef3a043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmployeeTask
+  ShowTopMostFoldoutHeaderGroup: 1
+  objectName: Objeto Interactivo
+  baseInteractionTime: 3
+  objectSpriteRenderer: {fileID: 0}
+  successColor: {r: 0, g: 1, b: 0, a: 1}
+  failColor: {r: 1, g: 0, b: 0, a: 1}
+  isCompleted:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  requiredRole: 1
 --- !u!1 &1298447809
 GameObject:
   m_ObjectHideFlags: 0
@@ -5029,7 +5023,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046077227}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0130b71eb19a3884e9ee3c5ee0077601, type: 3}
   m_Name: 

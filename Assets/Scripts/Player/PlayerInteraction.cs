@@ -1,6 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
-
+using System.Collections;
 public class PlayerInteraction : NetworkBehaviour
 {
     [Header("Referencias")]
@@ -10,7 +10,7 @@ public class PlayerInteraction : NetworkBehaviour
     [Header("Teclas")]
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
-    private ObjectInteraction currentInteractable;
+    private BaseInteractable currentInteractable;
 
     private void Awake()
     {
@@ -37,39 +37,38 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (currentInteractable == null || currentInteractable.isCompleted.Value) return;
 
-        // Guardamos la referencia local por seguridad
-        ObjectInteraction targetObject = currentInteractable;
-
-        bool canInteract = targetObject.CanPlayerInteract(playerIdentity);
-        string dialogMessage = targetObject.GetDialog(canInteract);
-
-        playerController.SetState(PlayerController.PlayerState.Interacting);
+        bool canInteract = currentInteractable.CanPlayerInteract(playerIdentity);
 
         if (canInteract)
         {
-            Debug.Log($"<color=green>[ÉXITO - {targetObject.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-
-            // Limpiamos la referencia del disparador para no re-evaluarlo localmente
+            BaseInteractable targetObject = currentInteractable;
             currentInteractable = null;
-
-            // Enviamos la solicitud autoritativa al Servidor
-            targetObject.RequestInteractRpc(OwnerClientId);
+            StartCoroutine(ProcessInteractionRoutine(targetObject));
         }
         else
         {
-            Debug.LogWarning($"<color=red>[RECHAZADO - {targetObject.ObjectName.ToUpper()}]:</color> {dialogMessage}");
-
-            // Si falló por rol, le notificamos al servidor para que pinte en rojo
-            targetObject.RequestInteractRpc(OwnerClientId);
+            currentInteractable.RequestInteractRpc(OwnerClientId);
         }
+    }
+    private IEnumerator ProcessInteractionRoutine(BaseInteractable targetObject)
+    {
+        // 1. Congelamos al jugador y emitimos la señal (si es un objeto robable)
+        playerController.SetState(PlayerController.PlayerState.Interacting);
+        targetObject.OnInteractionStarted(playerIdentity);
 
+        // 2. Esperamos los segundos definidos en el inspector (el Ladrón esperará más)
+        yield return new WaitForSeconds(targetObject.InteractionTime);
+
+        // 3. Consumamos la interacción en el servidor y liberamos al jugador
+        targetObject.RequestInteractRpc(OwnerClientId);
         playerController.SetState(PlayerController.PlayerState.Idle);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!IsOwner) return;
 
-        ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
+        BaseInteractable interactable = collision.GetComponent<BaseInteractable>();
         if (interactable != null && !interactable.isCompleted.Value)
         {
             currentInteractable = interactable;
@@ -81,8 +80,8 @@ public class PlayerInteraction : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        ObjectInteraction interactable = collision.GetComponent<ObjectInteraction>();
-        if (interactable != null && interactable == currentInteractable)
+        BaseInteractable interactable = collision.GetComponent<BaseInteractable>();
+        if (interactable != null && !interactable.isCompleted.Value)
         {
             currentInteractable = null;
             Debug.Log("<color=grey>[PISTA]:</color> Te alejaste del objeto.");
