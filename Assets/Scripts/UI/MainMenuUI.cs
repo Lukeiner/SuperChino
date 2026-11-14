@@ -86,15 +86,24 @@ public class MainMenuUI : MonoBehaviour
         else SceneManager.LoadScene(IdCodeScene);
     }
 
-    private void QuitGame()
+    public void QuitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
+    public void Salir()
+    {
+        Application.Quit();
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         PlayerPrefs.SetFloat(VolumeKey, evt.newValue);
