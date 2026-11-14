@@ -9,6 +9,12 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
     [SerializeField] private float smoothSpeed = 5f;
 
+    [Header("Configuración de Hiperfoco (Zoom)")]
+    [SerializeField] private float zoomSpeed = 6f;
+    private Camera cam;
+    private float defaultOrthoSize;
+    private float targetOrthoSize;
+
     private Transform targetTransform;
 
     private void Awake()
@@ -22,12 +28,24 @@ public class CameraFollow : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        cam = GetComponent<Camera>();
+        if (cam != null)
+        {
+            defaultOrthoSize = cam.orthographicSize;
+            targetOrthoSize = defaultOrthoSize;
+        }
     }
 
     // Método que llamará el personaje local cuando nazca en la red
     public void SetTarget(Transform target)
     {
         targetTransform = target;
+    }
+    public void SetZoomMultiplier(float multiplier)
+    {
+        if (cam == null) return;
+        targetOrthoSize = defaultOrthoSize / multiplier;
     }
 
     private void LateUpdate()
@@ -38,13 +56,15 @@ public class CameraFollow : MonoBehaviour
             return;
         }
 
-        // Posición deseada con el offset
+        // Seguimiento de posición
         Vector3 desiredPosition = targetTransform.position + offset;
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
-        // Movimiento suave (Lerp)
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-
-        transform.position = smoothedPosition;
+        // Interpolación suave del Zoom de hiperfoco
+        if (cam != null)
+        {
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetOrthoSize, zoomSpeed * Time.deltaTime);
+        }
     }
 
     private void FindLocalPlayer()
