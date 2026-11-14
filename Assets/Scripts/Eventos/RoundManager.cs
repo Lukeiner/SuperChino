@@ -89,6 +89,8 @@ public class RoundManager : NetworkBehaviour
             timeRemaining.Value = debatePhaseDuration;
             SetPlayerControlsRpc(false); // Congelamos controles
 
+            if (VotingManager.Instance != null) VotingManager.Instance.StartVotingSession();
+
             while (timeRemaining.Value > 0)
             {
                 yield return new WaitForSeconds(1f);
@@ -97,6 +99,7 @@ public class RoundManager : NetworkBehaviour
 
             // --- 3. RESOLUCIÓN DE LA RONDA ---
             currentGameState.Value = GameState.RoundEnd;
+            if (VotingManager.Instance != null) VotingManager.Instance.ResolveVotes();
 
             if (GameManager.Instance != null)
             {
