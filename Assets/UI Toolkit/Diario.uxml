@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Diario.uss" />
+    <!-- Pantalla de victoria / derrota: la portada de "EL DIARIO" es una imagen (hoja_victoria.png / hoja_derrota.png).
+         DiarioUI.cs cambia la imagen segun gane o pierda el equipo y hace la animacion. -->
+    <ui:VisualElement name="DiarioRoot" class="diario-root">
+        <ui:VisualElement name="Hoja" class="hoja" />
+        <ui:Button name="BotonVolver" text="VOLVER AL MENU" class="boton-volver" />
+    </ui:VisualElement>
+</ui:UXML>

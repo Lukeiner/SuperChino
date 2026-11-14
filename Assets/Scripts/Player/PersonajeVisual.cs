@@ -98,8 +98,6 @@ public class PersonajeVisual : MonoBehaviour
         ActualizarCapas();
     }
 
-    // ---------------- Para el resto del juego ----------------
-
     /// Cambia la expresion de la cara (la espalda no tiene cara).
     public void SetExpresion(Expresion nueva)
     {

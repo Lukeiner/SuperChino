@@ -1,0 +1,43 @@
+/* Pantalla de victoria / derrota: una hoja de 1500x930 px sobre una referencia de 1920x1080. */
+
+.diario-root {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-color: rgba(24, 24, 26, 0.94);
+    display: none;
+    opacity: 0;
+}
+
+.hoja {
+    position: absolute;
+    left: 210px; top: 20px;
+    width: 1500px; height: 930px;
+    -unity-background-scale-mode: stretch-to-fill;
+    rotate: 0deg;
+    scale: 1 1;
+    transform-origin: 50% 50%;
+}
+
+/* La imagen cambia con una clase (la pone DiarioUI.cs) */
+.hoja-victoria { background-image: url("../Sprites/Diario/hoja_victoria.png"); }
+.hoja-derrota  { background-image: url("../Sprites/Diario/hoja_derrota.png"); }
+
+.boton-volver {
+    position: absolute;
+    left: 700px; top: 990px;
+    width: 520px; height: 76px;
+    margin: 0; padding: 0;
+    background-color: rgb(235, 232, 222);
+    border-width: 6px;
+    border-color: rgb(15, 15, 15);
+    border-radius: 0;
+    color: rgb(15, 15, 15);
+    font-size: 42px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    opacity: 0;
+    transition-property: scale;
+    transition-duration: 0.12s;
+}
+.boton-volver:hover  { background-color: rgb(235, 232, 222); }
+.boton-volver:active { background-color: rgb(210, 207, 196); scale: 0.95 0.95; }
