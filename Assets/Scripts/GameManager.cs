@@ -6,6 +6,7 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Configuración de Partida")]
     [SerializeField] private int totalStolenItemsToWin = 5;
 
     [Header("Variables de Red (Sincronizadas)")]
@@ -16,6 +17,8 @@ public class GameManager : NetworkBehaviour
     public NetworkVariable<bool> isGameOver = new NetworkVariable<bool>(
         false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server
     );
+
+    public List<Transform> spawnedSacredObjects = new List<Transform>();
 
     private void Awake()
     {
@@ -90,6 +93,15 @@ public class GameManager : NetworkBehaviour
         Debug.Log("[GAME MANAGER] Roles asignados exitosamente a todos los jugadores.");
     }
 
+    public void RegisterSacredObject(Transform sacredObjectTransform)
+    {
+        if (!IsServer) return;
+        if (!spawnedSacredObjects.Contains(sacredObjectTransform))
+        {
+            spawnedSacredObjects.Add(sacredObjectTransform);
+        }
+    }
+
     // 2. REGISTRO DE ROBO (Llamado desde ObjectInteraction cuando el ladrón roba)
     public void NotifyItemStolen()
     {
@@ -114,6 +126,24 @@ public class GameManager : NetworkBehaviour
         }
 
         // TODO: Agregar condición si los empleados completaron todas las tareas del mapa
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void TriggerVoterEliminationServerRpc(ulong eliminatedPlayerId, bool wasThief)
+    {
+        if (!IsServer || isGameOver.Value) return;
+
+        if (wasThief)
+        {
+            // Si expulsaron al Ladrón, ganan los Empleados
+            Debug.Log("[GAME MANAGER] ¡El Ladrón fue descubierto y expulsado en la votación! Ganan los Empleados.");
+            EndGameServerRpc(Faction.Empleado);
+        }
+        else
+        {
+            // Si votaron mal y echaron a un inocente, pierde el inocente (o se evalúa si quedan suficientes)
+            Debug.Log($"[GAME MANAGER] El jugador {eliminatedPlayerId} fue expulsado pero era inocente.");
+        }
     }
 
     [ServerRpc]

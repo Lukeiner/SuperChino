@@ -26,4 +26,12 @@ public class StealableObject : BaseInteractable
         // Disparamos la señal al sistema en cuanto empieza el robo
         OnStealStarted?.Invoke(playerIdentity.transform, this.transform);
     }
+
+    protected override void OnInteractionCompletedServer(PlayerIdentity playerIdentity)
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.NotifyItemStolen();
+        }
+    }
 }

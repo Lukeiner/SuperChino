@@ -29,6 +29,13 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        if (currentState == PlayerState.Interacting || currentState == PlayerState.Frozen)
+        {
+            moveInput = Vector2.zero;
+            if (rb != null) rb.linearVelocity = Vector2.zero; // Usa rb.velocity si estás en Unity 2022 o anterior
+            return;
+        }
+
         ReadInput();
     }
 
@@ -67,6 +74,14 @@ public class PlayerController : NetworkBehaviour
     public void SetState(PlayerState newState)
     {
         if (currentState == newState) return;
+
+        // CANDADO: Si está interactuando o congelado, no puede pasar a Moving directamente
+        if ((currentState == PlayerState.Interacting || currentState == PlayerState.Frozen)
+            && newState == PlayerController.PlayerState.Moving)
+        {
+            return;
+        }
+
         currentState = newState;
     }
 

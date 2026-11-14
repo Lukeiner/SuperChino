@@ -52,14 +52,26 @@ public class PlayerInteraction : NetworkBehaviour
     }
     private IEnumerator ProcessInteractionRoutine(BaseInteractable targetObject)
     {
-        // 1. Congelamos al jugador y emitimos la señal (si es un objeto robable)
         playerController.SetState(PlayerController.PlayerState.Interacting);
         targetObject.OnInteractionStarted(playerIdentity);
 
-        // 2. Esperamos los segundos definidos en el inspector (el Ladrón esperará más)
+        //  Si es un objeto robable (o el jugador es Ladrón), activamos el hiperfoco 1.3x
+        bool isStealing = targetObject is StealableObject;
+        if (isStealing && CameraFollow.Instance != null)
+        {
+            CameraFollow.Instance.SetZoomMultiplier(1.3f);
+        }
+
+        // 2. Esperamos el tiempo de robo
         yield return new WaitForSeconds(targetObject.InteractionTime);
 
-        // 3. Consumamos la interacción en el servidor y liberamos al jugador
+        // Restauramos el zoom normal de la cámara al terminar
+        if (isStealing && CameraFollow.Instance != null)
+        {
+            CameraFollow.Instance.SetZoomMultiplier(1f);
+        }
+
+        // 3. Consumamos la interacción en el servidor y liberamos movimiento
         targetObject.RequestInteractRpc(OwnerClientId);
         playerController.SetState(PlayerController.PlayerState.Idle);
     }
