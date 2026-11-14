@@ -48,6 +48,7 @@ public abstract class BaseInteractable : NetworkBehaviour
 
     // Método virtual para emitir señales al inicio de la interacción (vacío por defecto)
     public virtual void OnInteractionStarted(PlayerIdentity playerIdentity) { }
+    protected virtual void OnInteractionCompletedServer(PlayerIdentity playerIdentity) { }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RequestInteractRpc(ulong clientId)
@@ -63,7 +64,7 @@ public abstract class BaseInteractable : NetworkBehaviour
                 // La tarea es válida. En lugar de cambiar color, la marcamos y destruimos.
                 isCompleted.Value = true;
                 Debug.Log($"[SERVIDOR] Despawnear {ObjectName}");
-
+                OnInteractionCompletedServer(playerIdentity);
                 // Le decimos a Netcode que borre este objeto de todas las pantallas
                 NetworkObject.Despawn(true);
             }
