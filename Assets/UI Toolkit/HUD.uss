@@ -75,3 +75,17 @@
 .d7 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_7.png"); }
 .d8 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_8.png"); }
 .d9 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_9.png"); }
+
+/* Cartel colgante de la fase: imagen de 1200x506 (2x) mostrada a 520x219, arriba a la izquierda.
+   CartelFaseUI.cs lo baja, lo balancea y lo sube; el giro es desde el borde de arriba (los cables). */
+.cartel {
+    position: absolute;
+    left: 40px; top: 0;
+    width: 520px; height: 219px;
+    -unity-background-scale-mode: stretch-to-fill;
+    transform-origin: 50% 0;
+    visibility: hidden;
+}
+.cartel-tareas    { background-image: url("../Sprites/HUD/Carteles/cartel_tareas.png"); }
+.cartel-debate    { background-image: url("../Sprites/HUD/Carteles/cartel_debate.png"); }
+.cartel-fin-ronda { background-image: url("../Sprites/HUD/Carteles/cartel_fin_ronda.png"); }

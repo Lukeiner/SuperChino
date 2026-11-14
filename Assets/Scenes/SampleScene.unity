@@ -1264,7 +1264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &271241277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2762,6 +2762,7 @@ GameObject:
   - component: {fileID: 1144394540}
   - component: {fileID: 1144394539}
   - component: {fileID: 9300001}
+  - component: {fileID: 9300002}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -2796,6 +2797,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RelojRondaUI
   segundosAlerta: 5
   parpadeosPorSegundo: 2
+--- !u!114 &9300002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144394538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9552e6b808ffdfa2c848855230720ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CartelFaseUI
+  duracionBajada: 0.55
+  tiempoVisible: 2.2
+  duracionSubida: 0.4
+  anguloBalanceo: 6
+  velocidadBalanceo: 9
+  frenadoBalanceo: 2.2
+  alturaEscondido: -700
+  teclasDePrueba: 1
 --- !u!114 &1144394540
 MonoBehaviour:
   m_ObjectHideFlags: 0

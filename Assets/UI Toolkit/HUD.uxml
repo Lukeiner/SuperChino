@@ -5,6 +5,8 @@
             <ui:VisualElement name="JoystickBase" class="joystick-base" picking-mode="Ignore" />
             <ui:VisualElement name="JoystickKnob" class="joystick-knob" picking-mode="Ignore" />
         </ui:VisualElement>
+        <!-- Cartel colgante de la fase (CartelFaseUI.cs). Va antes del reloj para que los cables queden detras. -->
+        <ui:VisualElement name="CartelFase" class="cartel" picking-mode="Ignore" />
         <!-- Reloj de ronda (tiempo y ronda). RelojRondaUI.cs lo actualiza; las posiciones de los digitos coinciden con el dibujo del cuerpo. -->
         <ui:VisualElement name="RelojRoot" class="reloj" picking-mode="Ignore">
             <ui:VisualElement name="RelojAlerta" class="reloj-alerta" picking-mode="Ignore" />
