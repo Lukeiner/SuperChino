@@ -6,8 +6,8 @@
 
 .joystick-zone {
     position: absolute;
-    left: 0; bottom: 0;
-    width: 50%; height: 75%;
+    left: 0; top: 40%; bottom: 0;
+    width: 35%;
 }
 
 .joystick-base {
@@ -42,3 +42,36 @@
 
 .hud-button:hover  { background-color: rgba(0, 0, 0, 0); }
 .hud-button:active { background-color: rgba(0, 0, 0, 0); scale: 0.9 0.9; }  /* se hunde al tocarlo */
+
+/* Reloj de ronda: despertador digital. Todo el cuerpo es una imagen de 1040x460 (2x) mostrada a 520x230. */
+.reloj {
+    position: absolute;
+    left: 700px; top: 6px;
+    width: 520px; height: 230px;
+    background-image: url("../Sprites/HUD/Reloj/reloj_cuerpo.png");
+    -unity-background-scale-mode: stretch-to-fill;
+    display: none;
+}
+
+.reloj-alerta {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-image: url("../Sprites/HUD/Reloj/reloj_alerta.png");
+    -unity-background-scale-mode: stretch-to-fill;
+    display: none;
+}
+
+.reloj-digito {
+    position: absolute;
+    -unity-background-scale-mode: stretch-to-fill;
+}
+.d0 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_0.png"); }
+.d1 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_1.png"); }
+.d2 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_2.png"); }
+.d3 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_3.png"); }
+.d4 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_4.png"); }
+.d5 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_5.png"); }
+.d6 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_6.png"); }
+.d7 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_7.png"); }
+.d8 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_8.png"); }
+.d9 { background-image: url("../Sprites/HUD/Reloj/reloj_digito_9.png"); }

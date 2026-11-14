@@ -5,6 +5,16 @@
             <ui:VisualElement name="JoystickBase" class="joystick-base" picking-mode="Ignore" />
             <ui:VisualElement name="JoystickKnob" class="joystick-knob" picking-mode="Ignore" />
         </ui:VisualElement>
+        <!-- Reloj de ronda (tiempo y ronda). RelojRondaUI.cs lo actualiza; las posiciones de los digitos coinciden con el dibujo del cuerpo. -->
+        <ui:VisualElement name="RelojRoot" class="reloj" picking-mode="Ignore">
+            <ui:VisualElement name="RelojAlerta" class="reloj-alerta" picking-mode="Ignore" />
+            <ui:VisualElement name="T0" class="reloj-digito" picking-mode="Ignore" style="left: 46.5px; top: 70.5px; width: 62.0px; height: 106.0px;" />
+            <ui:VisualElement name="T1" class="reloj-digito" picking-mode="Ignore" style="left: 105.5px; top: 70.5px; width: 62.0px; height: 106.0px;" />
+            <ui:VisualElement name="T2" class="reloj-digito" picking-mode="Ignore" style="left: 189.5px; top: 70.5px; width: 62.0px; height: 106.0px;" />
+            <ui:VisualElement name="T3" class="reloj-digito" picking-mode="Ignore" style="left: 248.5px; top: 70.5px; width: 62.0px; height: 106.0px;" />
+            <ui:VisualElement name="R0" class="reloj-digito" picking-mode="Ignore" style="left: 350.1px; top: 84.5px; width: 48.0px; height: 78.0px;" />
+            <ui:VisualElement name="R1" class="reloj-digito" picking-mode="Ignore" style="left: 436.3px; top: 84.5px; width: 48.0px; height: 78.0px;" />
+        </ui:VisualElement>
         <!-- Boton de pausa: sello de oferta. El dibujo trae las dos barras, por eso no lleva texto. -->
         <ui:Button name="pauseButton" class="hud-button" />
     </ui:VisualElement>

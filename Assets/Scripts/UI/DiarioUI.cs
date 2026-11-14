@@ -104,11 +104,13 @@ public class DiarioUI : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-        if (Input.GetKeyDown(KeyCode.F5)) Mostrar(true);
-        if (Input.GetKeyDown(KeyCode.F6)) Mostrar(false);
-        if (Input.GetKeyDown(KeyCode.F7)) Ocultar();
-#endif
+        // Atajos de prueba: solo en el Editor y en builds de desarrollo
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.F5)) Mostrar(true);
+            if (Input.GetKeyDown(KeyCode.F6)) Mostrar(false);
+            if (Input.GetKeyDown(KeyCode.F7)) Ocultar();
+        }
         if (!animando) return;
 
         tiempo += Time.unscaledDeltaTime;

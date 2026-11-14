@@ -28,6 +28,7 @@ public class EmojiWheelUI : MonoBehaviour
     private Coroutine scaleCoroutine;
     private int currentlySelectedIdx = -1;
     private bool isHoldingWheel = false;
+    private int trackedFingerId = -1; // dedo que abrio la rueda (-1 = mouse, para probar en el editor)
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class EmojiWheelUI : MonoBehaviour
             ProcessDragSelection();
 
             // Detectar cuando se suelta el dedo/clic (PointerUp)
-            if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
+            if (PointerReleased())
             {
                 ConfirmSelectionAndClose();
             }
@@ -68,6 +69,47 @@ public class EmojiWheelUI : MonoBehaviour
         scaleCoroutine = StartCoroutine(AnimateScale(Vector3.zero, Vector3.one));
     }
 
+    // Se usa desde el doble toque: la rueda sigue al dedo que la abrio, no al primer dedo de la pantalla
+    // (el primer dedo puede ser el del joystick).
+    public void ToggleWheel(int fingerId)
+    {
+        trackedFingerId = fingerId;
+        ToggleWheel();
+    }
+
+    private bool TryGetTrackedTouch(out Touch touch)
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch t = Input.GetTouch(i);
+            if (t.fingerId == trackedFingerId)
+            {
+                touch = t;
+                return true;
+            }
+        }
+        touch = default;
+        return false;
+    }
+
+    private Vector2 GetPointerPosition()
+    {
+        if (trackedFingerId >= 0 && TryGetTrackedTouch(out Touch touch))
+            return touch.position;
+        return Input.mousePosition;
+    }
+
+    private bool PointerReleased()
+    {
+        if (trackedFingerId >= 0)
+        {
+            if (TryGetTrackedTouch(out Touch touch))
+                return touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
+            return true; // el dedo ya no esta
+        }
+        return Input.GetMouseButtonUp(0);
+    }
+
     public void ToggleWheel()
     {
         if (wheelPanel.activeSelf)
@@ -83,6 +125,7 @@ public class EmojiWheelUI : MonoBehaviour
     public void CloseWheel()
     {
         isHoldingWheel = false;
+        trackedFingerId = -1;
         if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
         scaleCoroutine = StartCoroutine(AnimateScale(wheelRectTransform.localScale, Vector3.zero, () =>
         {
@@ -93,11 +136,7 @@ public class EmojiWheelUI : MonoBehaviour
     // 2. ARRASTRE Y SELECCIÓN (Hold & Drag)
     private void ProcessDragSelection()
     {
-        Vector2 inputPosition = Input.mousePosition;
-        if (Input.touchCount > 0)
-        {
-            inputPosition = Input.GetTouch(0).position;
-        }
+        Vector2 inputPosition = GetPointerPosition();
 
         Vector2 centerPos = RectTransformUtility.WorldToScreenPoint(null, wheelRectTransform.position);
         Vector2 dir = inputPosition - centerPos;

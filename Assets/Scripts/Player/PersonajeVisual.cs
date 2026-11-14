@@ -19,7 +19,6 @@ public class PersonajeVisual : MonoBehaviour
 
     [Header("Manos al caminar")]
     [SerializeField] private float balanceoManos = 0.1f;      // cuanto suben y bajan (unidades)
-    [SerializeField] private float giroManos = 14f;            // cuanto giran (grados)
     [SerializeField] private float frecuenciaMin = 1.6f;       // pasos por segundo yendo despacio
     [SerializeField] private float frecuenciaMax = 2.6f;       // pasos por segundo a toda velocidad
 
