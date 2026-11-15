@@ -1,29 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
+/// <summary>
+/// Rueda de emojis (torta). Se abre con doble toque (PlayerTouchInput), se apunta arrastrando el dedo
+/// y al soltar se manda el emoji elegido a todos los jugadores (PlayerEmojiHandler).
+/// La rueda se arma sola al iniciar con las imagenes de Assets/Resources/Emojis:
+///   rueda_fondo, rueda_resaltado, rueda_lineas y emoji_[nombre] por cada emoji de la lista.
+/// rueda_lineas (las lineas punteadas) y rueda_resaltado (la porcion roja) estan dibujadas para 5 porciones:
+/// si se cambia la cantidad de emojis hay que volver a dibujar esas dos imagenes.
+/// </summary>
 public class EmojiWheelUI : MonoBehaviour
 {
     [Header("Paneles de UI")]
     [SerializeField] private GameObject wheelPanel;
     [SerializeField] private RectTransform wheelRectTransform;
 
-    [Header("Configuración de Animación")]
+    [Header("ConfiguraciÃ³n de AnimaciÃ³n")]
     [SerializeField] private float popupDuration = 0.15f;
 
-    [Header("Lista de Botones de la Ruleta")]
-    [SerializeField] private List<EmojiButtonData> emojiButtons = new List<EmojiButtonData>();
+    [Header("Emojis (en orden: el primero a la derecha y sigue girando hacia arriba)")]
+    [SerializeField] private string[] emojis = { "alerta", "susto", "risa", "sospecha", "sombrero" };
 
-    [System.Serializable]
-    public class EmojiButtonData
-    {
-        public Image buttonImage;
-        public string emojiSymbol;
-        public Color normalColor = Color.white;
-        public Color highlightColor = Color.yellow;
-    }
+    [Header("TamaÃ±os (fraccion del tamaÃ±o de la rueda)")]
+    [SerializeField] private float distanciaIconos = 0.29f;   // que tan lejos del centro van los emojis
+    [SerializeField] private float tamanoIcono = 0.22f;
+    [SerializeField] private float tamanoSeleccionado = 0.27f;
+    [SerializeField] private float zonaMuerta = 40f;          // px desde el centro donde no se elige nada
+
+    private const string Carpeta = "Emojis/";
+
+    private Image resaltado;
+    private RectTransform[] iconos;
+    private float lado;
 
     private Coroutine scaleCoroutine;
     private int currentlySelectedIdx = -1;
@@ -38,12 +48,74 @@ public class EmojiWheelUI : MonoBehaviour
         if (wheelRectTransform == null)
             wheelRectTransform = wheelPanel.GetComponent<RectTransform>();
 
+        ConstruirRueda();
         wheelPanel.SetActive(false);
     }
 
+    // ---------- armado de la rueda ----------
+
+    private void ConstruirRueda()
+    {
+        // apaga los botones viejos (Emoji1..4) que quedaron en la escena
+        foreach (Transform hijo in wheelRectTransform)
+            hijo.gameObject.SetActive(false);
+
+        lado = Mathf.Min(wheelRectTransform.rect.width, wheelRectTransform.rect.height);
+
+        Image fondo = wheelPanel.GetComponent<Image>();
+        if (fondo != null)
+        {
+            Sprite s = Cargar("rueda_fondo");
+            if (s != null) fondo.sprite = s;
+            fondo.preserveAspect = true;
+            fondo.color = Color.white;
+        }
+
+        // porcion roja: viene dibujada apuntando a la derecha y se gira hacia el emoji elegido
+        resaltado = CrearImagen("Resaltado", Cargar("rueda_resaltado"), lado);
+        resaltado.enabled = false;
+
+        CrearImagen("Lineas", Cargar("rueda_lineas"), lado);
+
+        iconos = new RectTransform[emojis.Length];
+        float paso = emojis.Length > 0 ? 360f / emojis.Length : 0f;
+        for (int i = 0; i < emojis.Length; i++)
+        {
+            Image icono = CrearImagen("Emoji_" + emojis[i], Cargar("emoji_" + emojis[i]), lado * tamanoIcono);
+            float a = i * paso * Mathf.Deg2Rad;
+            icono.rectTransform.anchoredPosition = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * (lado * distanciaIconos);
+            iconos[i] = icono.rectTransform;
+        }
+    }
+
+    private Image CrearImagen(string nombre, Sprite sprite, float tamano)
+    {
+        GameObject go = new GameObject(nombre, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        RectTransform rt = go.GetComponent<RectTransform>();
+        rt.SetParent(wheelRectTransform, false);
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = new Vector2(tamano, tamano);
+        rt.anchoredPosition = Vector2.zero;
+
+        Image img = go.GetComponent<Image>();
+        img.sprite = sprite;
+        img.preserveAspect = true;
+        img.raycastTarget = false;
+        return img;
+    }
+
+    private Sprite Cargar(string nombre)
+    {
+        Sprite s = Resources.Load<Sprite>(Carpeta + nombre);
+        if (s == null) Debug.LogWarning($"[EmojiWheelUI] Falta la imagen Resources/{Carpeta}{nombre}.png", this);
+        return s;
+    }
+
+    // ---------- abrir / cerrar ----------
+
     private void Update()
     {
-        // Si la ruleta está abierta y el jugador mantiene presionado el dedo / clic
+        // Si la ruleta estÃ¡ abierta y el jugador mantiene presionado el dedo / clic
         if (isHoldingWheel && wheelPanel.activeSelf)
         {
             ProcessDragSelection();
@@ -56,14 +128,13 @@ public class EmojiWheelUI : MonoBehaviour
         }
     }
 
-    //  1. POP-UP ANIMADO (Abre la ruleta con animación de escala)
     public void OpenWheelWithPopup()
     {
         wheelPanel.SetActive(true);
         isHoldingWheel = true;
         currentlySelectedIdx = -1;
 
-        ResetButtonHighlights();
+        Resaltar(-1);
 
         if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
         scaleCoroutine = StartCoroutine(AnimateScale(Vector3.zero, Vector3.one));
@@ -75,6 +146,23 @@ public class EmojiWheelUI : MonoBehaviour
     {
         trackedFingerId = fingerId;
         ToggleWheel();
+    }
+
+    public void ToggleWheel()
+    {
+        if (wheelPanel.activeSelf) CloseWheel();
+        else OpenWheelWithPopup();
+    }
+
+    public void CloseWheel()
+    {
+        isHoldingWheel = false;
+        trackedFingerId = -1;
+        if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+        scaleCoroutine = StartCoroutine(AnimateScale(wheelRectTransform.localScale, Vector3.zero, () =>
+        {
+            wheelPanel.SetActive(false);
+        }));
     }
 
     private bool TryGetTrackedTouch(out Touch touch)
@@ -110,116 +198,66 @@ public class EmojiWheelUI : MonoBehaviour
         return Input.GetMouseButtonUp(0);
     }
 
-    public void ToggleWheel()
-    {
-        if (wheelPanel.activeSelf)
-        {
-            CloseWheel();
-        }
-        else
-        {
-            OpenWheelWithPopup();
-        }
-    }
+    // ---------- arrastre y selecciÃ³n ----------
 
-    public void CloseWheel()
-    {
-        isHoldingWheel = false;
-        trackedFingerId = -1;
-        if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-        scaleCoroutine = StartCoroutine(AnimateScale(wheelRectTransform.localScale, Vector3.zero, () =>
-        {
-            wheelPanel.SetActive(false);
-        }));
-    }
-
-    // 2. ARRASTRE Y SELECCIÓN (Hold & Drag)
     private void ProcessDragSelection()
     {
         Vector2 inputPosition = GetPointerPosition();
-
         Vector2 centerPos = RectTransformUtility.WorldToScreenPoint(null, wheelRectTransform.position);
         Vector2 dir = inputPosition - centerPos;
 
-        // Si el dedo está demasiado cerca del centro, no selecciona ningún emoji todavía
-        if (dir.magnitude < 40f)
+        // Si el dedo estÃ¡ demasiado cerca del centro, no selecciona ningÃºn emoji todavÃ­a
+        int nuevo = -1;
+        if (dir.magnitude >= zonaMuerta && emojis.Length > 0)
         {
-            if (currentlySelectedIdx != -1)
-            {
-                currentlySelectedIdx = -1;
-                ResetButtonHighlights();
-            }
-            return;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
+            float paso = 360f / emojis.Length;
+            nuevo = Mathf.RoundToInt(angle / paso) % emojis.Length;
         }
 
-        // Calcular el ángulo del arrastre (0 a 360 grados)
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if (angle < 0) angle += 360f;
-
-        // Determinar qué botón está en esa dirección
-        int newIndex = GetClosestButtonIndex(angle);
-
-        if (newIndex != currentlySelectedIdx)
+        if (nuevo != currentlySelectedIdx)
         {
-            currentlySelectedIdx = newIndex;
-            HighlightSelectedButton(currentlySelectedIdx);
+            currentlySelectedIdx = nuevo;
+            Resaltar(nuevo);
         }
     }
 
-    private int GetClosestButtonIndex(float angle)
+    private void Resaltar(int indice)
     {
-        if (emojiButtons.Count == 0) return -1;
-        float step = 360f / emojiButtons.Count;
-
-        // Ajustamos el desfase según la posición de los 4 botones
-        for (int i = 0; i < emojiButtons.Count; i++)
+        if (resaltado != null)
         {
-            float targetAngle = i * step;
-            float diff = Mathf.Abs(Mathf.DeltaAngle(angle, targetAngle));
-            if (diff <= step / 2f)
+            resaltado.enabled = indice >= 0;
+            if (indice >= 0)
             {
-                return i;
+                float paso = 360f / emojis.Length;
+                resaltado.rectTransform.localEulerAngles = new Vector3(0f, 0f, indice * paso);
             }
         }
-        return 0;
-    }
 
-    private void HighlightSelectedButton(int selectedIdx)
-    {
-        for (int i = 0; i < emojiButtons.Count; i++)
+        if (iconos == null) return;
+        for (int i = 0; i < iconos.Length; i++)
         {
-            if (emojiButtons[i].buttonImage != null)
-            {
-                emojiButtons[i].buttonImage.color = (i == selectedIdx)
-                    ? emojiButtons[i].highlightColor
-                    : emojiButtons[i].normalColor;
-            }
+            float t = (i == indice) ? tamanoSeleccionado : tamanoIcono;
+            iconos[i].sizeDelta = new Vector2(lado * t, lado * t);
         }
     }
 
-    private void ResetButtonHighlights()
-    {
-        foreach (var b in emojiButtons)
-        {
-            if (b.buttonImage != null) b.buttonImage.color = b.normalColor;
-        }
-    }
+    // ---------- confirmaciÃ³n y envÃ­o al soltar el dedo ----------
 
-    //  3. CONFIRMACIÓN Y ENVÍO AL SOLTAR EL DEDO
     private void ConfirmSelectionAndClose()
     {
-        if (currentlySelectedIdx >= 0 && currentlySelectedIdx < emojiButtons.Count)
+        if (currentlySelectedIdx >= 0 && currentlySelectedIdx < emojis.Length)
         {
-            string selectedEmoji = emojiButtons[currentlySelectedIdx].emojiSymbol;
-            Debug.Log($"<color=green>[SELECCIONADO]:</color> Soltaste sobre: {selectedEmoji}");
-
-            SendEmojiToNetwork(selectedEmoji);
+            string elegido = emojis[currentlySelectedIdx];
+            Debug.Log($"<color=green>[SELECCIONADO]:</color> Soltaste sobre: {elegido}");
+            SendEmojiToNetwork(elegido);
         }
 
         CloseWheel();
     }
 
-    private void SendEmojiToNetwork(string emojiSymbol)
+    private void SendEmojiToNetwork(string emoji)
     {
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.LocalClient != null)
         {
@@ -229,7 +267,7 @@ public class EmojiWheelUI : MonoBehaviour
                 var playerEmojiHandler = localPlayer.GetComponent<PlayerEmojiHandler>();
                 if (playerEmojiHandler != null)
                 {
-                    playerEmojiHandler.SendEmojiRpc(emojiSymbol);
+                    playerEmojiHandler.SendEmojiRpc(emoji);
                 }
             }
         }
@@ -242,9 +280,7 @@ public class EmojiWheelUI : MonoBehaviour
         while (elapsed < popupDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / popupDuration;
-            // Curva elástica / Smoothstep para efecto pop de apertura
-            t = Mathf.Sin(t * Mathf.PI * 0.5f);
+            float t = Mathf.Sin(Mathf.Clamp01(elapsed / popupDuration) * Mathf.PI * 0.5f);
             wheelRectTransform.localScale = Vector3.Lerp(from, to, t);
             yield return null;
         }

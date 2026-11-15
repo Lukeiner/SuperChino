@@ -551,7 +551,11 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   emojiBubbleObject: {fileID: 1690067672359094337}
   emojiText: {fileID: 6611903880133920054}
-  displayDuration: 2.5
+  displayDuration: 5.01
+  anchoGlobo: 1.89
+  tamanoEmoji: 0.6
+  ordenDibujo: 24
+  posicionGlobo: {x: 0.9, y: -0.42}
 --- !u!114 &671399084710617566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +570,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTouchInput
   ShowTopMostFoldoutHeaderGroup: 1
   doubleTapTimeThreshold: 0.3
+  zonaXMin: 0.735
+  zonaYDesdeArriba: 0.4
+  zonaYHastaArriba: 0.7
   emojiWheelUI: {fileID: 0}
 --- !u!114 &9100100000001
 MonoBehaviour:
@@ -579,3 +586,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f6bb7f99ed1433792bb34d5554c620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PersonajeVisual
+  balanceoManos: 0.1
+  frecuenciaMin: 1.6
+  frecuenciaMax: 2.6
+  rebote: 0.02
+  inclinacion: 2
+  velocidadMaxima: 6
+  mostrarSombra: 1
