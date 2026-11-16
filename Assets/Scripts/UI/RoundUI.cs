@@ -19,12 +19,11 @@ public class RoundUI : MonoBehaviour
 
     private void SubscribeToNetworkVariables()
     {
-        // Escuchamos los cambios en el tiempo, fase y número de ronda
         RoundManager.Instance.timeRemaining.OnValueChanged += OnTimeChanged;
         RoundManager.Instance.currentGameState.OnValueChanged += OnGameStateChanged;
         RoundManager.Instance.currentRound.OnValueChanged += OnRoundChanged;
+        RoundManager.Instance.totalRounds.OnValueChanged += OnTotalRoundsChanged; 
 
-        // Actualización inicial
         UpdateTimerDisplay(RoundManager.Instance.timeRemaining.Value);
         UpdatePhaseDisplay(RoundManager.Instance.currentGameState.Value);
         UpdateRoundDisplay(RoundManager.Instance.currentRound.Value, RoundManager.Instance.totalRounds.Value);
@@ -32,12 +31,12 @@ public class RoundUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Cancelamos las suscripciones al destruir el objeto para evitar memory leaks
         if (RoundManager.Instance != null)
         {
             RoundManager.Instance.timeRemaining.OnValueChanged -= OnTimeChanged;
             RoundManager.Instance.currentGameState.OnValueChanged -= OnGameStateChanged;
             RoundManager.Instance.currentRound.OnValueChanged -= OnRoundChanged;
+            RoundManager.Instance.totalRounds.OnValueChanged -= OnTotalRoundsChanged; 
         }
     }
 
@@ -57,6 +56,14 @@ public class RoundUI : MonoBehaviour
         if (RoundManager.Instance != null)
         {
             UpdateRoundDisplay(newRound, RoundManager.Instance.totalRounds.Value);
+        }
+    }
+
+    private void OnTotalRoundsChanged(int previousTotal, int newTotal)
+    {
+        if (RoundManager.Instance != null)
+        {
+            UpdateRoundDisplay(RoundManager.Instance.currentRound.Value, newTotal);
         }
     }
 

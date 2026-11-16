@@ -57,13 +57,12 @@ public class GameManager : NetworkBehaviour
         if (!IsServer) return;
 
         List<ulong> connectedClients = new List<ulong>(NetworkManager.Singleton.ConnectedClientsIds);
+        Debug.Log($"[GAME MANAGER] Repartiendo roles entre {connectedClients.Count} jugadores conectados.");
         if (connectedClients.Count == 0) return;
 
-        // Elegimos un Ladrón al azar entre los conectados
         int thiefIndex = Random.Range(0, connectedClients.Count);
         ulong thiefClientId = connectedClients[thiefIndex];
 
-        // Lista de roles de empleado disponibles para repartir
         RoleType[] availableRoles = (RoleType[])System.Enum.GetValues(typeof(RoleType));
 
         foreach (ulong clientId in connectedClients)
@@ -74,23 +73,19 @@ public class GameManager : NetworkBehaviour
                 var identity = clientObject.GetComponent<PlayerIdentity>();
                 if (identity != null)
                 {
+                    RoleType assignedRole = availableRoles[Random.Range(0, availableRoles.Length)];
+
                     if (clientId == thiefClientId)
                     {
-                        // Asignamos facción Ladrón (y un rol secundario para disimular)
-                        RoleType fakeRole = availableRoles[Random.Range(0, availableRoles.Length)];
-                        identity.SetIdentityServerRpc(Faction.Ladron, fakeRole);
+                        identity.SetIdentityOnServer(Faction.Ladron, assignedRole);
                     }
                     else
                     {
-                        // Asignamos facción Empleado y un rol al azar
-                        RoleType assignedRole = availableRoles[Random.Range(0, availableRoles.Length)];
-                        identity.SetIdentityServerRpc(Faction.Empleado, assignedRole);
+                        identity.SetIdentityOnServer(Faction.Empleado, assignedRole);
                     }
                 }
             }
         }
-
-        Debug.Log("[GAME MANAGER] Roles asignados exitosamente a todos los jugadores.");
     }
 
     public void RegisterSacredObject(Transform sacredObjectTransform)

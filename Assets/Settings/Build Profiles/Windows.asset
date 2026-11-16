@@ -67,9 +67,15 @@ MonoBehaviour:
   m_AdditionalPlatformBuildSettings: []
   m_OverrideGlobalSceneList: 1
   m_Scenes:
+  - m_enabled: 0
+    m_path: Assets/Scenes/IDCode_3.unity
+    m_guid: 7cc2a3c88bedaf44fa0608a81cb80612
   - m_enabled: 1
     m_path: Assets/Scenes/MainMenu.unity
-    m_guid: 7cc2a3c88bedaf44fa0608a81cb80612
+    m_guid: 68b1bf515668daa4295e145c4bd4a75a
+  - m_enabled: 1
+    m_path: Assets/Scenes/IDCode.unity
+    m_guid: a30a7834d88a8844abeb061b016cddb2
   - m_enabled: 1
     m_path: Assets/Scenes/SampleScene.unity
     m_guid: 8c9cfa26abfee488c85f1582747f6a02
