@@ -30,6 +30,8 @@ public class LobbyConnection : MonoBehaviour
     private bool serviciosListos = false;
     private bool conectando = false;
 
+    public static int JugadoresEsperados = 1;
+
     public Lobby SalaActual => salaActual;
 
     public bool EsHost => salaActual != null && salaActual.HostId == AuthenticationService.Instance.PlayerId;
@@ -263,9 +265,32 @@ public class LobbyConnection : MonoBehaviour
                 }
             });
 
-            Debug.Log("[Lobby] Partida iniciada como Host a través de Relay");
+            int totalEnSala = salaActual.Players.Count;
+
+            salaActual = await LobbyService.Instance.UpdateLobbyAsync(salaActual.Id,
+            new UpdateLobbyOptions
+            {
+                IsLocked = true,
+                Data = new Dictionary<string, DataObject>
+                {
+                    [ClaveRelay] = new DataObject(visibility: DataObject.VisibilityOptions.Member, value: codigoRelay)
+                }
+            });
+
+            Debug.Log($"[Lobby] Esperando a que los {totalEnSala} jugadores se conecten a Netcode...");
+
+            // Esperamos a que todos los de la sala terminen StartClient() antes de cambiar de escena
+            float esperaMax = 10f;
+            while (NetworkManager.Singleton.ConnectedClients.Count < totalEnSala && esperaMax > 0f)
+            {
+                await Task.Delay(200);
+                esperaMax -= 0.2f;
+            }
+
+            Debug.Log($"[Lobby] ¡Todos conectados ({NetworkManager.Singleton.ConnectedClients.Count})! Cargando escena...");
             PartidaIniciada?.Invoke();
             NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            return true;
             return true;
         }
         catch (Exception e)

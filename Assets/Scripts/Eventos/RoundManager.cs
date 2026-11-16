@@ -48,30 +48,44 @@ public class RoundManager : NetworkBehaviour
 
         if (IsServer)
         {
-            int totalPlayers = NetworkManager.Singleton.ConnectedClients.Count;
-            totalRounds.Value = Mathf.Max(1, totalPlayers - 1);
-
-            // El GameManager reparte los roles al arrancar la partida en red
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.AssignRolesToPlayers();
-            }
-
             StartCoroutine(GameLoopRoutine());
         }
     }
 
     private IEnumerator GameLoopRoutine()
     {
-        yield return new WaitForSeconds(2f); // Breve espera inicial
+        float timeout = 10f;
+        while (NetworkManager.Singleton.ConnectedClients.Count < LobbyConnection.JugadoresEsperados && timeout > 0f)
+        {
+            yield return new WaitForSeconds(0.2f);
+            timeout -= 0.2f;
+        }
 
+        yield return new WaitForSeconds(1f); // Breve margen para que spawneen los PlayerObjects
+
+        //  Ahora sí: ya están todos conectados. Calculamos N - 1 rondas y repartimos roles
+        int totalPlayers = NetworkManager.Singleton.ConnectedClients.Count;
+        totalRounds.Value = Mathf.Max(1, totalPlayers - 1);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AssignRolesToPlayers();
+        }
+        // (Opcional) Si tenés VotingManager, también refrescamos la lista de vivos acá:
+        if (VotingManager.Instance != null)
+        {
+            VotingManager.Instance.alivePlayers.Clear();
+            foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+            {
+                VotingManager.Instance.alivePlayers.Add(clientId);
+            }
+        }
         while (currentRound.Value <= totalRounds.Value)
         {
             // --- 1. FASE DE TAREAS / ROBO ---
             currentGameState.Value = GameState.TaskPhase;
             timeRemaining.Value = taskPhaseDuration;
             SetPlayerControlsRpc(true);
-
             while (timeRemaining.Value > 0)
             {
                 yield return new WaitForSeconds(1f);
@@ -83,7 +97,6 @@ public class RoundManager : NetworkBehaviour
                     yield break;
                 }
             }
-
             // --- 2. FASE DE DEBATE Y VOTACIÓN ---
             currentGameState.Value = GameState.DebatePhase;
             timeRemaining.Value = debatePhaseDuration;
@@ -96,7 +109,6 @@ public class RoundManager : NetworkBehaviour
                 yield return new WaitForSeconds(1f);
                 timeRemaining.Value -= 1f;
             }
-
             // --- 3. RESOLUCIÓN DE LA RONDA ---
             currentGameState.Value = GameState.RoundEnd;
             if (VotingManager.Instance != null) VotingManager.Instance.ResolveVotes();
@@ -109,7 +121,6 @@ public class RoundManager : NetworkBehaviour
                     yield break;
                 }
             }
-
             currentRound.Value++;
             yield return new WaitForSeconds(3f);
         }
