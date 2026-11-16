@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 6464042071699567167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.03, y: 0.01, z: 0}
+  m_LocalScale: {x: 0.23475058, y: 0.2185792, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: f5dae7a8b9c16ec3d064b527ebfa8095, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f08b762281abd06fc290e8b15317a23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -213,7 +213,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.2, y: 5.2}
+    oldSize: {x: 10.24, y: 9.89}
     newSize: {x: 1.212, y: 2.056}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -221,10 +221,25 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.5, y: 0.5}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5, y: 0.5}
+    - - {x: 2.4817014, y: 3.615801}
+      - {x: 0.7440989, y: 3.9331188}
+      - {x: -1.0864546, y: 4.390889}
+      - {x: -2.4576783, y: 3.6019409}
+      - {x: -3.377523, y: 3.3155077}
+      - {x: -5.1557817, y: 0.62506914}
+      - {x: -4.5276184, y: -1.6645424}
+      - {x: -2.745941, y: -3.422495}
+      - {x: -2.1085753, y: -4.096531}
+      - {x: -0.53612715, y: -4.625761}
+      - {x: 0.40829378, y: -4.6489244}
+      - {x: 1.2635866, y: -4.532106}
+      - {x: 2.9165895, y: -3.7908967}
+      - {x: 3.5896368, y: -3.1248424}
+      - {x: 4.197666, y: -2.3012247}
+      - {x: 4.888349, y: -0.44434506}
+      - {x: 4.156086, y: 1.7215441}
+      - {x: 3.126055, y: 3.1892366}
+      - {x: 3.0069458, y: 3.1239316}
   m_UseDelaunayMesh: 1
 --- !u!58 &7275573977395961482
 CircleCollider2D:
@@ -260,5 +275,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: 0.1125889, y: -0.13930899}
+  m_Radius: 4.2302046

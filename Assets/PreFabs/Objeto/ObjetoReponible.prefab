@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 6464042071699567167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.49, y: 0.6, z: 1}
+  m_LocalPosition: {x: 0.023, y: 1.097, z: 0}
+  m_LocalScale: {x: 0.12919159, y: 0.12515758, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -5075373584232630967, guid: 9eb7f380e085ae243ae75d2f5c56bdb1, type: 3}
+  m_Sprite: {fileID: -7737595635949221311, guid: 51a3679fdcad7e04abe40a3078d56a76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -213,7 +213,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.212, y: 2.056}
+    oldSize: {x: 8.38, y: 7.58}
     newSize: {x: 1.212, y: 2.056}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -221,19 +221,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.26721862, y: 0.73353195}
-      - {x: 0.24382696, y: 1.0427449}
-      - {x: -0.29270917, y: 1.0312129}
-      - {x: -0.24910587, y: 0.7352514}
-      - {x: -0.54570836, y: 0.50999063}
-      - {x: -0.6072254, y: 0.16740224}
-      - {x: -0.5, y: -0.5}
-      - {x: -0.23636264, y: -0.99509573}
-      - {x: 0.21868841, y: -1.0000384}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5169846, y: -0.18239117}
-      - {x: 0.61282825, y: 0.22095194}
-      - {x: 0.5, y: 0.5}
+    - - {x: 0.100491926, y: 3.8258986}
+      - {x: -1.1354544, y: 3.7317593}
+      - {x: -2.5965629, y: 3.8546777}
+      - {x: -4.0686526, y: 3.737985}
+      - {x: -3.6528797, y: 0.91334325}
+      - {x: -3.9265933, y: -1.6402131}
+      - {x: -3.9406242, y: -2.4420662}
+      - {x: -4.132423, y: -3.7717347}
+      - {x: 4.254607, y: -3.6782167}
+      - {x: 3.6967678, y: -0.42123085}
+      - {x: 3.9734893, y: 3.5788722}
+      - {x: 1.3100471, y: 3.627037}
+      - {x: 0.6212554, y: 3.7566957}
   m_UseDelaunayMesh: 1
 --- !u!58 &7275573977395961482
 CircleCollider2D:
@@ -269,5 +269,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.045470223, y: 0}
+  m_Radius: 3.7268174
