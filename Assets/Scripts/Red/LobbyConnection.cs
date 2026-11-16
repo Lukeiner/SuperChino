@@ -13,8 +13,6 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
@@ -144,7 +142,7 @@ public class LobbyConnection : MonoBehaviour
         cambios.ApplyToLobby(salaActual);
         SalaActualizada?.Invoke();
 
-        if (!EsHost & salaActual.Data != null & salaActual.Data.ContainsKey(ClaveRelay))
+        if (!EsHost && salaActual.Data != null && salaActual.Data.ContainsKey(ClaveRelay))
 {
             _ = ConectarComoCliente();
         }
@@ -237,7 +235,7 @@ public class LobbyConnection : MonoBehaviour
             Debug.LogError("[Lobby] Solo el host puede iniciar la partida");
             return false;
         }
-        if (conectando | NetworkManager.Singleton.IsListening) return false;
+        if (conectando || NetworkManager.Singleton.IsListening) return false;
         conectando = true;
         try
         {
@@ -248,6 +246,7 @@ public class LobbyConnection : MonoBehaviour
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             //transport.SetRelayServerData(alloc.ToRelayServerData("dtls"));
+            transport.SetHostRelayData(alloc.RelayServer.IpV4,(ushort)alloc.RelayServer.Port,alloc.AllocationIdBytes,alloc.Key,alloc.ConnectionData);
             if (!NetworkManager.Singleton.StartHost())
             {
                 Debug.LogError("[Lobby] StartHost() falló");
@@ -265,7 +264,8 @@ public class LobbyConnection : MonoBehaviour
             });
 
             Debug.Log("[Lobby] Partida iniciada como Host a través de Relay");
-            //PartidaIniciada? Invoke();
+            PartidaIniciada?.Invoke();
+            NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             return true;
         }
         catch (Exception e)
@@ -296,7 +296,8 @@ public class LobbyConnection : MonoBehaviour
             JoinAllocation join = await RelayService.Instance.JoinAllocationAsync(dato.Value);
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-            //transport.SetRelayServerData(join.ToRelayServerData("dtls"));
+            transport.SetClientRelayData(join.RelayServer.IpV4,(ushort)join.RelayServer.Port,join.AllocationIdBytes,join.Key,join.ConnectionData,join.HostConnectionData
+);
 
             if (!NetworkManager.Singleton.StartClient())
                 {
