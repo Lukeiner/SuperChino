@@ -13,8 +13,6 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
@@ -31,6 +29,8 @@ public class LobbyConnection : MonoBehaviour
     private ILobbyEvents eventosSala;
     private bool serviciosListos = false;
     private bool conectando = false;
+
+    public static int JugadoresEsperados = 1;
 
     public Lobby SalaActual => salaActual;
 
@@ -144,7 +144,7 @@ public class LobbyConnection : MonoBehaviour
         cambios.ApplyToLobby(salaActual);
         SalaActualizada?.Invoke();
 
-        if (!EsHost & salaActual.Data != null & salaActual.Data.ContainsKey(ClaveRelay))
+        if (!EsHost && salaActual.Data != null && salaActual.Data.ContainsKey(ClaveRelay))
 {
             _ = ConectarComoCliente();
         }
@@ -237,7 +237,7 @@ public class LobbyConnection : MonoBehaviour
             Debug.LogError("[Lobby] Solo el host puede iniciar la partida");
             return false;
         }
-        if (conectando | NetworkManager.Singleton.IsListening) return false;
+        if (conectando || NetworkManager.Singleton.IsListening) return false;
         conectando = true;
         try
         {
@@ -248,6 +248,7 @@ public class LobbyConnection : MonoBehaviour
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             //transport.SetRelayServerData(alloc.ToRelayServerData("dtls"));
+            transport.SetHostRelayData(alloc.RelayServer.IpV4,(ushort)alloc.RelayServer.Port,alloc.AllocationIdBytes,alloc.Key,alloc.ConnectionData);
             if (!NetworkManager.Singleton.StartHost())
             {
                 Debug.LogError("[Lobby] StartHost() falló");
@@ -264,8 +265,32 @@ public class LobbyConnection : MonoBehaviour
                 }
             });
 
-            Debug.Log("[Lobby] Partida iniciada como Host a través de Relay");
-            //PartidaIniciada? Invoke();
+            int totalEnSala = salaActual.Players.Count;
+
+            salaActual = await LobbyService.Instance.UpdateLobbyAsync(salaActual.Id,
+            new UpdateLobbyOptions
+            {
+                IsLocked = true,
+                Data = new Dictionary<string, DataObject>
+                {
+                    [ClaveRelay] = new DataObject(visibility: DataObject.VisibilityOptions.Member, value: codigoRelay)
+                }
+            });
+
+            Debug.Log($"[Lobby] Esperando a que los {totalEnSala} jugadores se conecten a Netcode...");
+
+            // Esperamos a que todos los de la sala terminen StartClient() antes de cambiar de escena
+            float esperaMax = 10f;
+            while (NetworkManager.Singleton.ConnectedClients.Count < totalEnSala && esperaMax > 0f)
+            {
+                await Task.Delay(200);
+                esperaMax -= 0.2f;
+            }
+
+            Debug.Log($"[Lobby] ¡Todos conectados ({NetworkManager.Singleton.ConnectedClients.Count})! Cargando escena...");
+            PartidaIniciada?.Invoke();
+            NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            return true;
             return true;
         }
         catch (Exception e)
@@ -296,7 +321,8 @@ public class LobbyConnection : MonoBehaviour
             JoinAllocation join = await RelayService.Instance.JoinAllocationAsync(dato.Value);
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-            //transport.SetRelayServerData(join.ToRelayServerData("dtls"));
+            transport.SetClientRelayData(join.RelayServer.IpV4,(ushort)join.RelayServer.Port,join.AllocationIdBytes,join.Key,join.ConnectionData,join.HostConnectionData
+);
 
             if (!NetworkManager.Singleton.StartClient())
                 {

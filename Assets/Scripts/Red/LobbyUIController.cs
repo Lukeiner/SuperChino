@@ -1,9 +1,7 @@
 using System;
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class LobbyUIController : MonoBehaviour
@@ -26,7 +24,7 @@ public class LobbyUIController : MonoBehaviour
 
     private void Start()
     {
-        if (lobby = null)
+        if (lobby == null)
         {
             lobby = FindAnyObjectByType<LobbyConnection>();
         }
@@ -40,7 +38,7 @@ public class LobbyUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (lobby = null) return;
+        if (lobby == null) return;
         lobby.SalaActualizada -= RefrescarSala;
         lobby.PartidaIniciada -= AlIniciarPartida;
         lobby.SalaCerrada -= AlCerrarseLaSala;
