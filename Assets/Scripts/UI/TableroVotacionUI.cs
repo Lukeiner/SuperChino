@@ -376,10 +376,20 @@ public class TableroVotacionUI : MonoBehaviour
 
     private static string RopaDe(ulong id)
     {
-        var nm = NetworkManager.Singleton;
-        NetworkObject obj = nm != null && nm.SpawnManager != null ? nm.SpawnManager.GetPlayerNetworkObject(id) : null;
+        NetworkObject obj = BuscarJugador(id);
         PlayerIdentity ident = obj != null ? obj.GetComponent<PlayerIdentity>() : null;
         return ident != null ? ident.CurrentRole.ToString().ToLowerInvariant() : "repositor";
+    }
+
+    /// <summary>Busca el objeto de un jugador por su id. Funciona en el host y en los clientes
+    /// (GetPlayerNetworkObject solo funciona en el host).</summary>
+    public static NetworkObject BuscarJugador(ulong id)
+    {
+        var nm = NetworkManager.Singleton;
+        if (nm == null || nm.SpawnManager == null) return null;
+        foreach (NetworkObject o in nm.SpawnManager.SpawnedObjectsList)
+            if (o != null && o.IsPlayerObject && o.OwnerClientId == id) return o;
+        return null;
     }
 
     private Texture2D Tex(string nombre, string rutaCompleta = null)

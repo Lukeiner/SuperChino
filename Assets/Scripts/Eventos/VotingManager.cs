@@ -157,8 +157,8 @@ public class VotingManager : NetworkBehaviour
     private void HandleInnocentEliminatedClientRpc(ulong eliminatedId)
     {
         // Ocultamos el personaje eliminado en las pantallas de todos.
-        // (ConnectedClients solo existe en el host; en los clientes se busca con GetPlayerNetworkObject)
-        var netObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(eliminatedId);
+        // (ConnectedClients y GetPlayerNetworkObject solo funcionan en el host; BuscarJugador funciona en todos)
+        var netObj = TableroVotacionUI.BuscarJugador(eliminatedId);
         if (netObj != null)
         {
             netObj.gameObject.SetActive(false);

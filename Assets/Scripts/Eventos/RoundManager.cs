@@ -9,10 +9,10 @@ public class RoundManager : NetworkBehaviour
     public enum GameState
     {
         WaitingToStart,
-        TaskPhase,    // Tiempo para hacer tareas y robar
-        DebatePhase,  // Tiempo para debatir y votar
-        RoundEnd,     // Resolución de votación
-        GameOver      // Fin de la partida
+        TaskPhase, // Tiempo para hacer tareas y robar
+        DebatePhase, // Tiempo para debatir y votar
+        RoundEnd, // Resolución de votación
+        GameOver  // Fin de la partida
     }
 
     [Header("Configuración de Tiempos (Segundos)")]
@@ -89,7 +89,7 @@ public class RoundManager : NetworkBehaviour
 
         while (currentRound.Value <= totalRounds.Value)
         {
-            // --- 1. FASE DE TAREAS / ROBO ---
+            // FASE DE TAREAS / ROBO
             currentGameState.Value = GameState.TaskPhase;
             timeRemaining.Value = taskPhaseDuration;
             SetPlayerControlsRpc(true);
@@ -104,7 +104,7 @@ public class RoundManager : NetworkBehaviour
                     yield break;
                 }
             }
-            // --- 2. FASE DE DEBATE Y VOTACIÓN ---
+            // FASE DE DEBATE Y VOTACIÓN 
             currentGameState.Value = GameState.DebatePhase;
             timeRemaining.Value = debatePhaseDuration;
             SetPlayerControlsRpc(false); // Congelamos controles
@@ -116,7 +116,7 @@ public class RoundManager : NetworkBehaviour
                 yield return new WaitForSeconds(1f);
                 timeRemaining.Value -= 1f;
             }
-            // --- 3. RESOLUCIÓN DE LA RONDA ---
+            // RESOLUCIÓN DE LA RONDA
             currentGameState.Value = GameState.RoundEnd;
             if (VotingManager.Instance != null) VotingManager.Instance.ResolveVotes();
 
@@ -132,7 +132,7 @@ public class RoundManager : NetworkBehaviour
             yield return new WaitForSeconds(3f);
         }
 
-        // --- 4. FIN DE LA PARTIDA ---
+        // FIN DE LA PARTIDA
         currentGameState.Value = GameState.GameOver;
         Debug.Log("<color=orange>[ROUND MANAGER] Se completaron todas las rondas.</color>");
     }

@@ -9,15 +9,15 @@ public class VotingUI : MonoBehaviour
     public static VotingUI Instance { get; private set; }
 
     [Header("Paneles")]
-    [SerializeField] private GameObject votingPanel;        // Panel con la lista de sospechosos (respaldo si no esta el tablero)
-    [SerializeField] private GameObject eliminatedPanel;    // Pantalla "Fuiste expulsado - Game Over"
+    [SerializeField] private GameObject votingPanel; // Panel con la lista de sospechosos (respaldo si no esta el tablero)
+    [SerializeField] private GameObject eliminatedPanel; // Pantalla "Fuiste expulsado - Game Over"
 
     [Header("Lista Dinámica de Botones")]
-    [SerializeField] private Transform buttonsContainer;  // Un objeto con VerticalLayoutGroup
+    [SerializeField] private Transform buttonsContainer; // Un objeto con VerticalLayoutGroup
     [SerializeField] private Button playerButtonPrefab;
 
     [Header("Tablero de corcho (diseño de Leo)")]
-    [SerializeField] private bool usarTablero = true;       // si se apaga, vuelve la lista de botones original
+    [SerializeField] private bool usarTablero = true; // si se apaga, vuelve la lista de botones original
 
     private bool isEliminated = false;
 
