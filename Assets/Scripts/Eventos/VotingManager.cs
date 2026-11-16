@@ -64,6 +64,7 @@ public class VotingManager : NetworkBehaviour
         if (currentVotes.Count == 0)
         {
             Debug.Log("[VOTACIÓN] Nadie votó. No hay expulsados.");
+            ShowResultClientRpc((byte)TableroVotacionUI.Resultado.NadieDespedido, 0);
             return;
         }
 
@@ -97,6 +98,7 @@ public class VotingManager : NetworkBehaviour
         if (isTie)
         {
             Debug.Log("[VOTACIÓN] Hubo empate. Nadie fue expulsado.");
+            ShowResultClientRpc((byte)TableroVotacionUI.Resultado.NadieDespedido, 0);
             return;
         }
 
@@ -112,6 +114,9 @@ public class VotingManager : NetworkBehaviour
         {
             var identity = client.PlayerObject.GetComponent<PlayerIdentity>();
             bool wasThief = identity != null && identity.IsLadron();
+
+            // Pantalla de resultado para todos (tablero con la foto del despedido)
+            ShowResultClientRpc((byte)(wasThief ? TableroVotacionUI.Resultado.Ladron : TableroVotacionUI.Resultado.Inocente), eliminatedId);
 
             if (wasThief)
             {
@@ -142,11 +147,19 @@ public class VotingManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.Everyone)]
+    private void ShowResultClientRpc(byte tipo, ulong eliminatedId)
+    {
+        if (VotingUI.Instance != null)
+            VotingUI.Instance.ShowResult((TableroVotacionUI.Resultado)tipo, eliminatedId);
+    }
+
+    [Rpc(SendTo.Everyone)]
     private void HandleInnocentEliminatedClientRpc(ulong eliminatedId)
     {
-        // Ocultamos el personaje eliminado en las pantallas de todos
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(
-            NetworkManager.Singleton.ConnectedClients[eliminatedId].PlayerObject.NetworkObjectId, out var netObj))
+        // Ocultamos el personaje eliminado en las pantallas de todos.
+        // (ConnectedClients solo existe en el host; en los clientes se busca con GetPlayerNetworkObject)
+        var netObj = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(eliminatedId);
+        if (netObj != null)
         {
             netObj.gameObject.SetActive(false);
         }
