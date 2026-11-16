@@ -18,6 +18,7 @@ public class RoundManager : NetworkBehaviour
     [Header("Configuración de Tiempos (Segundos)")]
     [SerializeField] private float taskPhaseDuration = 60f;
     [SerializeField] private float debatePhaseDuration = 30f;
+    [SerializeField] private float roleCardDuration = 6.5f; // lo que dura la credencial de rol al empezar
 
     [Header("Variables de Red")]
     public NetworkVariable<GameState> currentGameState = new NetworkVariable<GameState>(
@@ -80,6 +81,12 @@ public class RoundManager : NetworkBehaviour
                 VotingManager.Instance.alivePlayers.Add(clientId);
             }
         }
+
+        // Pantalla de rol (credencial): todos ven quien son con los controles quietos y el reloj parado
+        SetPlayerControlsRpc(false);
+        ShowRoleCardRpc();
+        yield return new WaitForSeconds(roleCardDuration);
+
         while (currentRound.Value <= totalRounds.Value)
         {
             // --- 1. FASE DE TAREAS / ROBO ---
@@ -128,6 +135,12 @@ public class RoundManager : NetworkBehaviour
         // --- 4. FIN DE LA PARTIDA ---
         currentGameState.Value = GameState.GameOver;
         Debug.Log("<color=orange>[ROUND MANAGER] Se completaron todas las rondas.</color>");
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void ShowRoleCardRpc()
+    {
+        if (RolIdentidadUI.Instance != null) RolIdentidadUI.Instance.MostrarMiIdentidadAhora();
     }
 
     [Rpc(SendTo.Everyone)]

@@ -16,6 +16,8 @@ using UnityEngine.UIElements;
 /// </summary>
 public class RolIdentidadUI : MonoBehaviour
 {
+    public static RolIdentidadUI Instance { get; private set; }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Instalar()
     {
@@ -64,6 +66,7 @@ public class RolIdentidadUI : MonoBehaviour
 
     private void OnEnable()
     {
+        Instance = this;
         fuente = Resources.Load<Font>("Votacion/fuente_mano");
         Armar();
     }
@@ -76,13 +79,11 @@ public class RolIdentidadUI : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F12)) Mostrar(true, RoleType.Cajero, 1);
         }
 
-        // Se muestra una vez por partida, al arrancar la primera fase de tareas (ahi ya estan repartidos los roles)
+        // Normalmente la abre el RoundManager (MostrarMiIdentidadAhora) apenas reparte los roles.
+        // Si por algo no llego ese aviso, se muestra igual al arrancar la primera fase de tareas.
         RoundManager rm = RoundManager.Instance;
         if (!yaMostrado && rm != null && rm.currentGameState.Value == RoundManager.GameState.TaskPhase)
-        {
-            yaMostrado = true;
-            esperaIdentidad = 0.5f; // un respiro para que llegue la identidad por red
-        }
+            MostrarMiIdentidadAhora();
         if (esperaIdentidad >= 0f)
         {
             esperaIdentidad -= Time.unscaledDeltaTime;
@@ -90,6 +91,14 @@ public class RolIdentidadUI : MonoBehaviour
         }
 
         Animar(Time.unscaledDeltaTime);
+    }
+
+    /// <summary>La llama el RoundManager en todos apenas se reparten los roles.</summary>
+    public void MostrarMiIdentidadAhora()
+    {
+        if (yaMostrado) return;
+        yaMostrado = true;
+        esperaIdentidad = 0.4f; // un respiro para que llegue la identidad por red
     }
 
     private void MostrarMiIdentidad()
@@ -100,6 +109,8 @@ public class RolIdentidadUI : MonoBehaviour
         if (id == null) return;
         Mostrar(id.CurrentFaction == Faction.Ladron, id.CurrentRole, nm.LocalClientId);
     }
+
+    private void OnDestroy() { if (Instance == this) Instance = null; }
 
     // ================= contenido =================
 

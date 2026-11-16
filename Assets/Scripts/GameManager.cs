@@ -152,6 +152,13 @@ public class GameManager : NetworkBehaviour
     private void NotifyGameEndClientRpc(Faction winningFaction)
     {
         Debug.Log($"<color=gold>[FIN DE LA PARTIDA]: ¡Ha ganado la facción {winningFaction}!</color>");
-        // TODO: Activar UI de Victoria/Derrota en pantalla
+        // Diario de victoria/derrota. Espera un poco para que se vea antes el tablero con el resultado de la votacion.
+        StartCoroutine(MostrarDiario(winningFaction == Faction.Empleado));
+    }
+
+    private System.Collections.IEnumerator MostrarDiario(bool ganaronEmpleados)
+    {
+        yield return new WaitForSecondsRealtime(3.5f);
+        if (DiarioUI.Instance != null) DiarioUI.Instance.Mostrar(ganaronEmpleados);
     }
 }
