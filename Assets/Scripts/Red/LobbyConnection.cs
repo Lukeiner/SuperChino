@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+//using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Mono.Cecil.Cil;
+//using Mono.Cecil.Cil;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
@@ -12,11 +12,9 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class LobbyConnection : MonoBehaviour
 {
@@ -290,7 +288,6 @@ public class LobbyConnection : MonoBehaviour
             Debug.Log($"[Lobby] ¡Todos conectados ({NetworkManager.Singleton.ConnectedClients.Count})! Cargando escena...");
             PartidaIniciada?.Invoke();
             NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-            return true;
             return true;
         }
         catch (Exception e)

@@ -240,6 +240,7 @@ MonoBehaviour:
   eliminatedPanel: {fileID: 759746216}
   buttonsContainer: {fileID: 1256625550}
   playerButtonPrefab: {fileID: 1345486740513296804, guid: 51c930af398d42b4cb42e01a254c402b, type: 3}
+  usarTablero: 1
 --- !u!1 &9100001
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +401,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f20426f2b4dc3ff3fc366738cdb712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiarioUI
+--- !u!114 &9300001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144394538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c3d8b9cb0ebd8c6e96a5026ddb93ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RelojRondaUI
+  segundosAlerta: 5
+  parpadeosPorSegundo: 2
+--- !u!114 &9300002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144394538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9552e6b808ffdfa2c848855230720ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CartelFaseUI
+  duracionBajada: 0.55
+  tiempoVisible: 2.2
+  duracionSubida: 0.4
+  anguloBalanceo: 6
+  velocidadBalanceo: 9
+  frenadoBalanceo: 2.2
+  alturaEscondido: -700
+  teclasDePrueba: 1
 --- !u!1 &31054972
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +510,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   taskPhaseDuration: 60
   debatePhaseDuration: 30
+  roleCardDuration: 6.5
   currentGameState:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
@@ -1817,22 +1853,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &455489572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455489568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1044d80e589b4a54e84670eac73e017d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PausaAnimaciones
-  escalaTabla: 0.92
-  duracionEntrada: 0.4
-  duracionSalida: 0.25
-  duracionGiro: 0.36
 --- !u!114 &455489569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,6 +1903,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &455489572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455489568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1044d80e589b4a54e84670eac73e017d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PausaAnimaciones
+  escalaTabla: 0.92
+  duracionEntrada: 0.4
+  duracionSalida: 0.25
+  duracionGiro: 0.36
 --- !u!1 &479308094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,7 +2996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 2700949253
   InScenePlacedSourceGlobalObjectIdHash: 0
-  m_InScenePlacedDisabledByDefault: 1
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -3388,40 +3424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDUI
   pauseMenu: {fileID: 455489569}
---- !u!114 &9300001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144394538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c3d8b9cb0ebd8c6e96a5026ddb93ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RelojRondaUI
-  segundosAlerta: 5
-  parpadeosPorSegundo: 2
---- !u!114 &9300002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144394538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9552e6b808ffdfa2c848855230720ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CartelFaseUI
-  duracionBajada: 0.55
-  tiempoVisible: 2.2
-  duracionSubida: 0.4
-  anguloBalanceo: 6
-  velocidadBalanceo: 9
-  frenadoBalanceo: 2.2
-  alturaEscondido: -700
-  teclasDePrueba: 1
 --- !u!114 &1144394540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3673,7 +3675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 1637627219
   InScenePlacedSourceGlobalObjectIdHash: 0
-  m_InScenePlacedDisabledByDefault: 1
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -4004,23 +4006,16 @@ MonoBehaviour:
   wheelPanel: {fileID: 1306769049}
   wheelRectTransform: {fileID: 1306769050}
   popupDuration: 0.15
-  emojiButtons:
-  - buttonImage: {fileID: 0}
-    emojiSymbol: '!'
-    normalColor: {r: 0, g: 0, b: 0, a: 0}
-    highlightColor: {r: 0.335849, g: 0.29592732, b: 0.29592732, a: 0}
-  - buttonImage: {fileID: 0}
-    emojiSymbol: 'D:'
-    normalColor: {r: 0, g: 0, b: 0, a: 0}
-    highlightColor: {r: 0.3372549, g: 0.29803923, b: 0.29803923, a: 0}
-  - buttonImage: {fileID: 0}
-    emojiSymbol: :D
-    normalColor: {r: 0, g: 0, b: 0, a: 0}
-    highlightColor: {r: 0.3372549, g: 0.29803923, b: 0.29803923, a: 0}
-  - buttonImage: {fileID: 0}
-    emojiSymbol: :3
-    normalColor: {r: 0, g: 0, b: 0, a: 0}
-    highlightColor: {r: 0.3372549, g: 0.29803923, b: 0.29803923, a: 0}
+  emojis:
+  - alerta
+  - susto
+  - risa
+  - sospecha
+  - sombrero
+  distanciaIconos: 0.29
+  tamanoIcono: 0.22
+  tamanoSeleccionado: 0.27
+  zonaMuerta: 40
 --- !u!1 &1358248393
 GameObject:
   m_ObjectHideFlags: 0
@@ -5886,6 +5881,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 795481293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1786016923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1786016925}
+  - component: {fileID: 1786016924}
+  m_Layer: 0
+  m_Name: MusicaFondo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1786016924
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786016923}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: b7c9c6123e0e38b4ab3ef483827ffb03, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.79
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1786016925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786016923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 920.31757, y: 505.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1791649164
 GameObject:
   m_ObjectHideFlags: 0
@@ -6616,7 +6740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 3056802477
   InScenePlacedSourceGlobalObjectIdHash: 0
-  m_InScenePlacedDisabledByDefault: 1
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -7045,3 +7169,4 @@ SceneRoots:
   - {fileID: 9200002}
   - {fileID: 795481293}
   - {fileID: 1676768156}
+  - {fileID: 1786016925}
